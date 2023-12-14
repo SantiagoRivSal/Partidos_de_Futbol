@@ -7,4 +7,4 @@ type EdicionTorneoDto struct{
 	Campeon int `json:"campeon"`
 	Subcampeon int `json:"subcampeon"`
 }
-type TorneosDto []TorneoDto
+type EdicionTorneosDto [] EdicionTorneoDto

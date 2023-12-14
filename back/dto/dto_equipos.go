@@ -6,4 +6,4 @@ type EquipoDto struct{
 	Escudo string `json:"escudo"`
 	IdPais int `json:"id_pais"`
 }
-type PaisesDto []PaisDto
+type EquiposDto []EquipoDto
