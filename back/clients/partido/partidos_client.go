@@ -29,29 +29,29 @@ func GetPartidos() model.Partidos {
 	return partidos
 }
 
-func UpdateGolesLocal(golesLocal int, idPartido int) int {
+/*func UpdateGolesLocal(golesLocal int, idPartido int) int {
 	result := Db.Model(&model.Partido{}).Where("id = ?", idPartido).Update("goles_local", golesLocal)
 
 	if result.Error != nil {
 		log.Error("Equipo no participante")
 	}
 	return golesLocal
-}
+}*/
 
-func UpdateGolesVisitante(golesVisitante int, idPartido int) int {
+/*func UpdateGolesVisitante(golesVisitante int, idPartido int) int {
 	result := Db.Model(&model.Partido{}).Where("id = ?", idPartido).Update("goles_visitante", golesVisitante)
 
 	if result.Error != nil {
 		log.Error("Equipo no participante")
 	}
 	return golesVisitante
-}
+}*/
 
-func UpdateGanador(ganador int, idPartido int) int {
+/*func UpdateGanador(ganador int, idPartido int) int {
 	result := Db.Model(&model.Partido{}).Where("id = ?", idPartido).Update("ganador", ganador)
 
 	if result.Error != nil {
 		log.Error("Equipo no participante")
 	}
 	return ganador
-}
+}*/

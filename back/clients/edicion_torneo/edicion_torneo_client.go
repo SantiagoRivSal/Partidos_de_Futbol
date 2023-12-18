@@ -10,7 +10,7 @@ import (
 
 var Db *gorm.DB
 
-func InsertEdicionTornos(edicionTorneo model.EdicionTorneo) model.EdicionTorneo {
+func InsertEdicionTorneos(edicionTorneo model.EdicionTorneo) model.EdicionTorneo {
 	result := Db.Create(&edicionTorneo)
 
 	if result.Error != nil {
@@ -20,7 +20,7 @@ func InsertEdicionTornos(edicionTorneo model.EdicionTorneo) model.EdicionTorneo 
 	return edicionTorneo
 }
 
-func GetEdicionTornos() model.EdicionTorneos {
+func GetEdicionTorneos() model.EdicionTorneos {
 	var edicionTorneos model.EdicionTorneos
 	Db.Find(&edicionTorneos)
 
@@ -29,20 +29,20 @@ func GetEdicionTornos() model.EdicionTorneos {
 	return edicionTorneos
 }
 
-func UpdateCampeon(campeon int, idEdicionTorneo int) int {
+/*func UpdateCampeon(campeon int, idEdicionTorneo int) int {
 	result := Db.Model(&model.EdicionTorneo{}).Where("id = ?", idEdicionTorneo).Update("campeon", campeon)
 
 	if result.Error != nil {
 		log.Error("Equipo no participante")
 	}
 	return campeon
-}
+}*/
 
-func UpdateSubcampeon(subcampeon int, idEdicionTorneo int) int {
+/*func UpdateSubcampeon(subcampeon int, idEdicionTorneo int) int {
 	result := Db.Model(&model.EdicionTorneo{}).Where("id = ?", idEdicionTorneo).Update("subcampeon", subcampeon)
 
 	if result.Error != nil {
 		log.Error("Equipo no participante")
 	}
 	return subcampeon
-}
+}*/

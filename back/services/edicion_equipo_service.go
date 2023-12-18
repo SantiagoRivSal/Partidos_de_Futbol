@@ -10,12 +10,12 @@ import (
 type edicionEquipoService struct{}
 
 type edicionEquipoServiceServiceInterface interface {
-	GetEdicionEquipos() (dto.EdicionEquipoesDto, e.ApiError)
+	GetEdicionEquipos() (dto.EdicionEquiposDto, e.ApiError)
 	InsertEdicionEquipos(edicionEquipoDto dto.EdicionEquipoDto) (dto.EdicionEquipoDto, e.ApiError)
 }
 
 var (
-	EdicionEquipoService edicionEquipoServiceServiceInterface
+	EdicionEquipoService edicionEquipoServiceInterface
 )
 
 func init() {
@@ -24,8 +24,8 @@ func init() {
 
 func (s *edicionEquipoService) GetEdicionEquipos() (dto.EdicionEquiposDto, e.ApiError) {
 
-	var edicionEquipos model.EdicionEquipoes = edicionEquipoCliente.GetEdicionEquipos()
-	var edicionEquiposDto dto.EdicionEquipoesDto
+	var edicionEquipos model.EdicionEquipos = edicionEquipoCliente.GetEdicionEquipos()
+	var edicionEquiposDto dto.EdicionEquiposDto
 	if len(edicionEquipos) == 0 {
 		return edicionEquiposDto, e.NewBadRequestApiError("equipos de ediciones no encontradas")
 	}
@@ -38,9 +38,23 @@ func (s *edicionEquipoService) GetEdicionEquipos() (dto.EdicionEquiposDto, e.Api
 		edicionEquiposDto = append(edicionEquiposDto, edicionEquipoDto)
 	}
 
-	return edicionEquipoesDto, nil
+	return edicionEquiposDto, nil
 }
 
 func (s *edicionEquipoService) InsertEdicionEquipos(edicionEquipoDto dto.EdicionEquipoDto) (dto.EdicionEquipoDto, e.ApiError) {
+
+	var edicionEquipo model.EdicionEquipo
+
+	edicionEquipo.IdEdicionTorneo = edicionEquipoDto.IdEdicionTorneo
+	edicionEquipo.IdEquipo = edicionEquipoDto.IdEquipo
+	edicionEquipo.Id = edicionEquipoDto.Id
+
+	edicionEquipo = edicionEquipoCliente.InsertEdicionEquipos(edicionEquipo)
+
+	edicionEquipoDto.IdEdicionTorneo = edicionEquipo.IdEdicionTorneo
+	edicionEquipoDto.IdEquipo = edicionEquipo.IdEquipo
+	edicionEquipoDto.Id = edicionEquipo.Id
+
+	return edicionEquipoDto, nil
 
 }

@@ -24,10 +24,10 @@ var (
 )
 
 func init() {
-	DBName := "FIFA"
+	DBName := "fifa"
 	DBUser := "root"
 	DBPass := "root"
-	DBHost := "database"
+	DBHost := "127.0.0.1"
 	// ------------------------
 
 	db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True") //ver puerto
