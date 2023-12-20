@@ -19,7 +19,7 @@ func EdicionEquipoInsert(c *gin.Context) {
 		return
 	}
 
-	edicionEquipoDto, er := service.EdicionEquipoService.InsertEdicionEquipo(edicionEquipoDto)
+	edicionEquipoDto, er := service.EdicionEquipoService.InsertEdicionEquipos(edicionEquipoDto)
 	if er != nil {
 		c.JSON(er.Status(), er)
 		return
@@ -39,4 +39,3 @@ func GetEdicionEquipos(c *gin.Context) {
 
 	c.JSON(http.StatusOK, edicionequiposDto)
 }
-

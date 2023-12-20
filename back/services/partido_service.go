@@ -45,10 +45,10 @@ func (s *partidoService) GetPartidos() (dto.PartidosDto, e.ApiError) {
 	return partidosDto, nil
 }
 
-InsertPartidos(partidoDto dto.PartidoDto) (dto.PartidoDto, e.ApiError){
+func (s *partidoService) InsertPartidos(partidoDto dto.PartidoDto) (dto.PartidoDto, e.ApiError) {
 	var partido model.Partido
 
-	partido.Id= partidoDto.Id
+	partido.Id = partidoDto.Id
 	partido.IdFase = partidoDto.IdFase
 	partido.IdEquipoLocal = partidoDto.IdEquipoLocal
 	partido.IdEquipoVisitante = partidoDto.IdEquipoVisitante
@@ -67,5 +67,4 @@ InsertPartidos(partidoDto dto.PartidoDto) (dto.PartidoDto, e.ApiError){
 	partidoDto.Ganador = partido.Ganador
 
 	return partidoDto, nil
-	
 }

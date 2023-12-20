@@ -19,7 +19,7 @@ func EdicionTorneoInsert(c *gin.Context) {
 		return
 	}
 
-	edicionTorneoDto, er := service.EdicionTorneoService.InsertEdicionTorneo(edicionTorneoDto)
+	edicionTorneoDto, er := service.EdicionTorneoService.InsertEdicionTorneos(edicionTorneoDto)
 	if er != nil {
 		c.JSON(er.Status(), er)
 		return

@@ -9,7 +9,7 @@ import (
 
 type edicionEquipoService struct{}
 
-type edicionEquipoServiceServiceInterface interface {
+type edicionEquipoServiceInterface interface {
 	GetEdicionEquipos() (dto.EdicionEquiposDto, e.ApiError)
 	InsertEdicionEquipos(edicionEquipoDto dto.EdicionEquipoDto) (dto.EdicionEquipoDto, e.ApiError)
 }

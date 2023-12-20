@@ -1,4 +1,4 @@
-package edicion_equipos
+package edicion_equipo
 
 //ORM tradutcotr
 import (

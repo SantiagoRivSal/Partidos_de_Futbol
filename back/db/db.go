@@ -1,10 +1,8 @@
 package db
 
 import (
-	//product "mvc-go/clients/product"
-
 	confederacionClient "back/clients/confederacion"
-	edicionEquipoClient "back/clients/edicion_equipo"
+	edicionEquipoClient "back/clients/edicion_equipos"
 	edicionTorneoDetailClient "back/clients/edicion_torneo"
 	equipoClient "back/clients/equipo"
 	faseClient "back/clients/fase"
@@ -39,14 +37,14 @@ func init() {
 		log.Info("Connection Established")
 	}
 
-	confederacion.Db = db 
-	edicionEquipo.Db = db 
-	edicionTorneoDetail.Db = db 
-	equipo.Db = db 
-	fase.Db = db 
-	pais.Db = db 
-	partido.Db = db 
-	torneo.Db = db 
+	confederacionClient.Db = db
+	edicionEquipoClient.Db = db
+	edicionTorneoDetailClient.Db = db
+	equipoClient.Db = db
+	faseClient.Db = db
+	paisClient.Db = db
+	partidoClient.Db = db
+	torneoClient.Db = db
 }
 
 func StartDbEngine() {

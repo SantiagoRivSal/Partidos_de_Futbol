@@ -9,7 +9,7 @@ import (
 
 type edicionTorneoService struct{}
 
-type edicionTorneoServiceServiceInterface interface {
+type edicionTorneoServiceInterface interface {
 	GetEdicionTorneos() (dto.EdicionTorneosDto, e.ApiError)
 	InsertEdicionTorneos(edicionTorneoDto dto.EdicionTorneoDto) (dto.EdicionTorneoDto, e.ApiError)
 }
@@ -47,7 +47,7 @@ func (s *edicionTorneoService) InsertEdicionTorneos(edicionTorneoDto dto.Edicion
 
 	var edicionTorneo model.EdicionTorneo
 
-	edicionTorneo.IdTorneo= edicionTorneoDto.IdTorneo
+	edicionTorneo.IdTorneo = edicionTorneoDto.IdTorneo
 	edicionTorneo.Anio = edicionTorneoDto.Anio
 	edicionTorneo.Campeon = edicionTorneoDto.Campeon
 	edicionTorneo.Anio = edicionTorneoDto.Anio

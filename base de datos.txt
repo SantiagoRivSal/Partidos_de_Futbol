@@ -1,0 +1,27 @@
+INSERT INTO `fifa`.`confederacions` (`id`, `nombre`, `logo`) VALUES ('1', 'Conmebol', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_de_la_Conmebol.svg/888px-Logo_de_la_Conmebol.svg.png');
+INSERT INTO `fifa`.`confederacions` (`id`, `nombre`, `logo`) VALUES ('2', 'EUFA', 'https://2.bp.blogspot.com/-inJxt3l1Ggc/Welu2Bmat6I/AAAAAAABP7w/fQ3jJUftH7IW68jzT0VzLNUe7ZhkxpmTACLcBGAs/s1600/UEFA.png');
+
+
+INSERT INTO `fifa`.`fases` (`id`, `nombre`) VALUES ('1', 'Final');
+INSERT INTO `fifa`.`fases` (`id`, `nombre`) VALUES ('2', 'Semifinal');
+INSERT INTO `fifa`.`fases` (`id`, `nombre`) VALUES ('3', 'Cuartos de Final');
+INSERT INTO `fifa`.`fases` (`id`, `nombre`) VALUES ('4', 'Octavos de Final');
+
+
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Argentina','https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/1200px-Flag_of_Argentina.svg.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Brasil', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/2560px-Flag_of_Brazil.svg.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Uruguay', 'https://upload.wikimedia.org/wikipedia/commons/0/03/Bandera_Uruguay_2018.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Colombia', 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Bandera_de_Colombia.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Chile', 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/2560px-Flag_of_Chile.svg.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Peru', 'https://upload.wikimedia.org/wikipedia/commons/3/39/Peru_bandera.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Paraguay', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Bandera_de_Paraguay.png/640px-Bandera_de_Paraguay.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Ecuador', 'https://upload.wikimedia.org/wikipedia/commons/9/96/Flag_of_Ecuador.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Bolivia', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Bandera_de_Bolivia_%28Estado%29.svg/264px-Bandera_de_Bolivia_%28Estado%29.svg.png', '1');
+INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Venezuela', 'https://upload.wikimedia.org/wikipedia/commons/4/48/Venezuela_flag.png', '1');
+
+
+INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('1', 'Copa Libertadores', 'https://upload.wikimedia.org/wikipedia/pt/4/4b/Conmebol_Libertadores_Bridgestone_logo.png', '1');
+INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('2', 'Copa Sudamericana', 'https://upload.wikimedia.org/wikipedia/pt/e/e4/Conmebol_Sudamericana_logo.png', '1');
+INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('3', 'Champions League', 'https://upload.wikimedia.org/wikipedia/pt/9/9b/116px-UEFA_Champions_League_logo_2_svg.png', '2');
+INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('4', 'Europa League', 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/2015_UEFA_Europa_League_logo_%282%29.svg/731px-2015_UEFA_Europa_League_logo_%282%29.svg.png', '2');
+

@@ -19,11 +19,11 @@ func mapUrls() {
 
 	//Equipos por Edicion Mapping
 	router.GET("/equiposxedicion", edicionEquipoController.GetEdicionEquipos)
-	router.POST("/equipoxedicion", edicionEquipoController.EdicionEquiposInsert)
+	router.POST("/equipoxedicion", edicionEquipoController.EdicionEquipoInsert)
 
 	//Edicion de Torneo Mapping
 	router.GET("/ediciones_de_torneo", edicionTorneoController.GetEdicionTorneos)
-	router.POST("/edicion_de_torneo", edicionTorneoController.EdicionTorneosInsert)
+	router.POST("/edicion_de_torneo", edicionTorneoController.EdicionTorneoInsert)
 
 	// Equipos Mapping
 	router.GET("/equipos", equipoController.GetEquipos)
@@ -36,7 +36,7 @@ func mapUrls() {
 
 	//PArtidos del Torneo Mapping
 	router.GET("/partidos", partidoController.GetPartidos)
-	router.POST("/partido", partidoController.PartidosInsert)	
+	router.POST("/partido", partidoController.PartidosInsert)
 
 	// Torneos Mapping
 	router.GET("/torneos", torneoController.GetTorneos)
