@@ -18,5 +18,5 @@ func GetFases(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK,fasesDto)
+	c.JSON(http.StatusOK, fasesDto)
 }

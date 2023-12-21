@@ -32,6 +32,7 @@ func (s *faseService) GetFases() (dto.FasesDto, e.ApiError) {
 		var faseDto dto.FaseDto
 		faseDto.Nombre = fase.Nombre
 		faseDto.Id = fase.Id
+		faseDto.CantidadEquipos = fase.CantidadEquipos
 
 		fasesDto = append(fasesDto, faseDto)
 	}
