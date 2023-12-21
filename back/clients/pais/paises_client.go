@@ -18,3 +18,12 @@ func GetPaises() model.Paises {
 
 	return paises
 }
+
+func GetPaisesByIdConfederacion(IdConfederacion int) model.Paises {
+	var paises model.Paises
+
+	Db.Where("id_confederacion = ?", IdConfederacion).Find(&paises)
+	log.Debug("Paises: ", paises)
+
+	return paises
+}

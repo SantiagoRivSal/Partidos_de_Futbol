@@ -18,3 +18,12 @@ func GetEquipos() model.Equipos {
 
 	return equipos
 }
+
+func GetEquiposByIdPais(IdPais int) model.Equipos {
+	var equipos model.Equipos
+
+	Db.Where("id_pais = ?", IdPais).Find(&equipos)
+	log.Debug("Equipos: ", equipos)
+
+	return equipos
+}
