@@ -10,7 +10,7 @@ import (
 type edicionTorneoService struct{}
 
 type edicionTorneoServiceInterface interface {
-	GetEdicionTorneos() (dto.EdicionTorneosDto, e.ApiError)
+	GetEdicionTorneos(IdTorneo int) (dto.EdicionTorneosDto, e.ApiError)
 	InsertEdicionTorneos(edicionTorneoDto dto.EdicionTorneoDto) (dto.EdicionTorneoDto, e.ApiError)
 }
 
@@ -22,9 +22,9 @@ func init() {
 	EdicionTorneoService = &edicionTorneoService{}
 }
 
-func (s *edicionTorneoService) GetEdicionTorneos() (dto.EdicionTorneosDto, e.ApiError) {
+func (s *edicionTorneoService) GetEdicionTorneos(IdTorneo int) (dto.EdicionTorneosDto, e.ApiError) {
 
-	var edicionTorneos model.EdicionTorneos = edicionTorneoCliente.GetEdicionTorneos()
+	var edicionTorneos model.EdicionTorneos = edicionTorneoCliente.GetEdicionTorneos(IdTorneo)
 	var edicionTorneosDto dto.EdicionTorneosDto
 	if len(edicionTorneos) == 0 {
 		return edicionTorneosDto, e.NewBadRequestApiError("Ediciones de torneos no encontradas")
@@ -32,10 +32,9 @@ func (s *edicionTorneoService) GetEdicionTorneos() (dto.EdicionTorneosDto, e.Api
 	for _, edicionTorneo := range edicionTorneos {
 		var edicionTorneoDto dto.EdicionTorneoDto
 		edicionTorneoDto.IdTorneo = edicionTorneo.IdTorneo
+		edicionTorneoDto.Id = edicionTorneo.Id
 		edicionTorneoDto.Anio = edicionTorneo.Anio
-		edicionTorneoDto.Campeon = edicionTorneo.Campeon
-		edicionTorneoDto.Anio = edicionTorneo.Anio
-		edicionTorneoDto.Subcampeon = edicionTorneo.Subcampeon
+		edicionTorneoDto.SedeFinal = edicionTorneo.SedeFinal
 
 		edicionTorneosDto = append(edicionTorneosDto, edicionTorneoDto)
 	}
@@ -49,17 +48,15 @@ func (s *edicionTorneoService) InsertEdicionTorneos(edicionTorneoDto dto.Edicion
 
 	edicionTorneo.IdTorneo = edicionTorneoDto.IdTorneo
 	edicionTorneo.Anio = edicionTorneoDto.Anio
-	edicionTorneo.Campeon = edicionTorneoDto.Campeon
-	edicionTorneo.Anio = edicionTorneoDto.Anio
-	edicionTorneo.Subcampeon = edicionTorneoDto.Subcampeon
+	edicionTorneo.Id = edicionTorneoDto.Id
+	edicionTorneo.SedeFinal = edicionTorneoDto.SedeFinal
 
 	edicionTorneo = edicionTorneoCliente.InsertEdicionTorneos(edicionTorneo)
 
 	edicionTorneoDto.IdTorneo = edicionTorneo.IdTorneo
 	edicionTorneoDto.Anio = edicionTorneo.Anio
-	edicionTorneoDto.Campeon = edicionTorneo.Campeon
-	edicionTorneoDto.Anio = edicionTorneo.Anio
-	edicionTorneoDto.Subcampeon = edicionTorneo.Subcampeon
+	edicionTorneoDto.Id = edicionTorneo.Id
+	edicionTorneoDto.SedeFinal = edicionTorneo.SedeFinal
 
 	return edicionTorneoDto, nil
 

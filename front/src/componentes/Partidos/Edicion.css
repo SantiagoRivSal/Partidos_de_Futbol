@@ -1,0 +1,48 @@
+/* Edicion.css */
+
+.Edicion {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    width: 200px;
+    margin: 10px;
+  }
+
+  .Ediciones {
+    padding: 2rem 1rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+    gap: 3rem 2rem;
+    box-sizing: border-box;
+  }
+  
+  /* Estilo para el año */
+  .Edicion h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  /* Estilo para la sede */
+  .Edicion h2 {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  .Torneo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .torneo {
+    margin: 10px;
+  }
+  
+  .torneo .logo img {
+    width: 150px; /* Ajusta el tamaño según sea necesario */
+    height: auto; /* Mantiene la proporción original */
+  }

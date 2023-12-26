@@ -8,6 +8,7 @@ import (
 	faseClient "back/clients/fase"
 	paisClient "back/clients/pais"
 	partidoClient "back/clients/partido"
+	resultadoCliente "back/clients/resultado"
 	torneoClient "back/clients/torneo"
 	"back/model"
 
@@ -38,6 +39,7 @@ func init() {
 	}
 
 	confederacionClient.Db = db
+	resultadoCliente.Db = db
 	edicionEquipoClient.Db = db
 	edicionTorneoDetailClient.Db = db
 	equipoClient.Db = db
@@ -51,6 +53,7 @@ func StartDbEngine() {
 	db.AutoMigrate(&model.Confederacion{})
 	db.AutoMigrate(&model.EdicionEquipo{})
 	db.AutoMigrate(&model.EdicionTorneo{})
+	db.AutoMigrate(&model.Resultado{})
 	db.AutoMigrate(&model.Equipo{})
 	db.AutoMigrate(&model.Fase{})
 	db.AutoMigrate(&model.Pais{})

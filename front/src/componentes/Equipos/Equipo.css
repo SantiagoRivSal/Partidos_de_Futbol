@@ -1,0 +1,95 @@
+/* Estilos para EquiposLista */
+
+/* Paises.css */
+.paises {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 10px; /* Agregado un poco de relleno al contenedor */
+}
+
+.paises button {
+  margin: 10px;
+  padding: 15px;
+  background-color: #000000;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.paises button:hover {
+  background-color: #e0e0e0;
+}
+
+.paises .bandera img {
+  width: 70px;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 20%;
+}
+
+.paises .nombre {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+
+/* Estilos para Equipos */
+
+.Equipo {
+  display: flex;
+  align-items: center;
+  background-color: #97a1a1;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.Equipos{
+  padding: 2rem 1rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(22rem, 1fr));
+  gap: 3rem 2rem;
+  box-sizing: border-box;
+}
+
+.Equipo:hover {
+  transform: scale(1.05);
+}
+
+.Equipo .Equipo_img img {
+  max-width: 80px;
+  border-radius: 5px;
+  margin-right: 10px; /* Añade un margen a la derecha para separar el escudo del nombre */
+}
+
+.Equipo .Equipo_footer{
+  padding: 0.5rem;
+}
+
+.Equipo .Equipo_footer h1 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.EquipoItem span {
+  font-size: 14px; /* Tamaño del nombre del equipo */
+}
+/* Otros estilos comunes */
+
+/*body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ecf0f1; /* Color de fondo principal
+}*/
+

@@ -1,0 +1,38 @@
+/* header.css */
+
+header {
+    background-color: #1a1a1a; /* Fondo oscuro */
+    color: #fff; /* Texto en color blanco */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo img {
+    width: 150px;
+  }
+  
+  ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    margin-right: 20px;
+  }
+  
+  .botones_menu {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .botones_menu:hover {
+    color: #00bcd4; /* Color azul claro al pasar el mouse */
+  }
+  

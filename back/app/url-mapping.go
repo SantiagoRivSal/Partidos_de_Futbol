@@ -8,6 +8,7 @@ import (
 	faseController "back/controllers/fase"
 	paisController "back/controllers/pais"
 	partidoController "back/controllers/partido"
+	resultadoController "back/controllers/resultado"
 	torneoController "back/controllers/torneo"
 
 	log "github.com/sirupsen/logrus"
@@ -22,8 +23,12 @@ func mapUrls() {
 	router.POST("/equipoxedicion", edicionEquipoController.EdicionEquipoInsert)
 
 	//Edicion de Torneo Mapping
-	router.GET("/ediciones_de_torneo", edicionTorneoController.GetEdicionTorneos)
+	router.GET("/ediciones_de_torneo/:id_torneo", edicionTorneoController.GetEdicionTorneos)
 	router.POST("/edicion_de_torneo", edicionTorneoController.EdicionTorneoInsert)
+
+	//Resultado de Torneo Mapping
+	router.GET("/resultados", resultadoController.GetResultados)
+	router.POST("/resultado", resultadoController.ResultadoInsert)
 
 	// Equipos Mapping
 	router.GET("/equipos", equipoController.GetEquipos)
@@ -34,7 +39,7 @@ func mapUrls() {
 
 	// Paises Mapping
 	router.GET("/paises", paisController.GetPaises)
-	router.GET("/paisesxconfederacion/:idConfederacion", paisController.GetPaisesByIdConfederacion)
+	router.GET("/paisesxconfederacion/:id_confederacion", paisController.GetPaisesByIdConfederacion)
 
 	//PArtidos del Torneo Mapping
 	router.GET("/partidos", partidoController.GetPartidos)
@@ -42,7 +47,7 @@ func mapUrls() {
 
 	// Torneos Mapping
 	router.GET("/torneos", torneoController.GetTorneos)
-	router.GET("/torneosxconfederacion/:idConfederacion", torneoController.GetTorneosByIdConfederacion)
+	router.GET("/torneosxconfederacion/:id_confederacion", torneoController.GetTorneosByIdConfederacion)
 
 	log.Info("Finishing mappings configurations")
 }

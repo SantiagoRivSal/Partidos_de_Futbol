@@ -20,29 +20,11 @@ func InsertEdicionTorneos(edicionTorneo model.EdicionTorneo) model.EdicionTorneo
 	return edicionTorneo
 }
 
-func GetEdicionTorneos() model.EdicionTorneos {
+func GetEdicionTorneos(IdTorneo int) model.EdicionTorneos {
 	var edicionTorneos model.EdicionTorneos
-	Db.Find(&edicionTorneos)
 
-	log.Debug("Ediciones del Torneo: ", edicionTorneos)
+	Db.Where("id_torneo = ?", IdTorneo).Find(&edicionTorneos)
+	log.Debug("Ediciones: ", edicionTorneos)
 
 	return edicionTorneos
 }
-
-/*func UpdateCampeon(campeon int, idEdicionTorneo int) int {
-	result := Db.Model(&model.EdicionTorneo{}).Where("id = ?", idEdicionTorneo).Update("campeon", campeon)
-
-	if result.Error != nil {
-		log.Error("Equipo no participante")
-	}
-	return campeon
-}*/
-
-/*func UpdateSubcampeon(subcampeon int, idEdicionTorneo int) int {
-	result := Db.Model(&model.EdicionTorneo{}).Where("id = ?", idEdicionTorneo).Update("subcampeon", subcampeon)
-
-	if result.Error != nil {
-		log.Error("Equipo no participante")
-	}
-	return subcampeon
-}*/
