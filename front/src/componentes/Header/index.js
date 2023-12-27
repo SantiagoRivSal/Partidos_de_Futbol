@@ -26,11 +26,6 @@ export const Header = ()=>{
                </Link> 
             </li>
             <li>
-               <Link to="/historiales" className="botones_menu"> 
-                HISTORIALES
-                </Link> 
-            </li>
-            <li>
                <Link to="/ediciones" className="botones_menu"> 
                 EDICIONES
                 </Link> 

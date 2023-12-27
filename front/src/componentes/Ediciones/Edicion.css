@@ -1,14 +1,21 @@
 /* Edicion.css */
 
-.Edicion {
+  .Edicion {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 8px;
     text-align: center;
     width: 200px;
     margin: 10px;
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Mantiene el color del texto heredado */
+    display: block; /* Asegura que ocupa todo el ancho del contenedor */
   }
-
+  
+  .Edicion:hover,
+  .Edicion:focus {
+    background-color: #f0f0f0; /* Cambia el color de fondo al pasar el ratón o hacer foco */
+  }
   .Ediciones {
     padding: 2rem 1rem;
     margin: 0 auto;

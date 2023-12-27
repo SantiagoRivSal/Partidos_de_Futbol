@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import './Edicion.css';
-
 import { EdicionItem } from "./EdicionItem";
 //import { TorneoItem } from "./TorneoItem";
 import "bootstrap/dist/css/bootstrap.min.css";
