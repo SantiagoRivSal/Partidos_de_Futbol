@@ -19,7 +19,7 @@ func mapUrls() {
 	router.GET("/confederaciones", confederacionController.GetConfederaciones)
 
 	//Equipos por Edicion Mapping
-	router.GET("/equiposxedicion", edicionEquipoController.GetEdicionEquipos)
+	router.GET("/equiposxedicion/:id_edicion_torneo", edicionEquipoController.GetEdicionEquipos)
 	router.POST("/equipoxedicion", edicionEquipoController.EdicionEquipoInsert)
 
 	//Edicion de Torneo Mapping

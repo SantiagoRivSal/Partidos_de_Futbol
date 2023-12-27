@@ -4,9 +4,11 @@ import (
 	"back/dto"
 	service "back/services"
 	"net/http"
+	"strconv"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func EdicionEquipoInsert(c *gin.Context) {
@@ -29,8 +31,10 @@ func EdicionEquipoInsert(c *gin.Context) {
 }
 
 func GetEdicionEquipos(c *gin.Context) {
+	log.Debug("Ediciones id to load: " + c.Param("id_edicion_torneo"))
+	IdEdicionTorneo, _ := strconv.Atoi(c.Param("id_edicion_torneo"))
 	var edicionequiposDto dto.EdicionEquiposDto
-	edicionequiposDto, err := service.EdicionEquipoService.GetEdicionEquipos()
+	edicionequiposDto, err := service.EdicionEquipoService.GetEdicionEquipos(IdEdicionTorneo)
 
 	if err != nil {
 		c.JSON(err.Status(), err)

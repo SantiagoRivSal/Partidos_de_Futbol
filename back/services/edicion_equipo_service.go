@@ -10,7 +10,7 @@ import (
 type edicionEquipoService struct{}
 
 type edicionEquipoServiceInterface interface {
-	GetEdicionEquipos() (dto.EdicionEquiposDto, e.ApiError)
+	GetEdicionEquipos(IdEdicionTorneo int) (dto.EdicionEquiposDto, e.ApiError)
 	InsertEdicionEquipos(edicionEquipoDto dto.EdicionEquipoDto) (dto.EdicionEquipoDto, e.ApiError)
 }
 
@@ -22,9 +22,9 @@ func init() {
 	EdicionEquipoService = &edicionEquipoService{}
 }
 
-func (s *edicionEquipoService) GetEdicionEquipos() (dto.EdicionEquiposDto, e.ApiError) {
+func (s *edicionEquipoService) GetEdicionEquipos(IdEdicionTorneo int) (dto.EdicionEquiposDto, e.ApiError) {
 
-	var edicionEquipos model.EdicionEquipos = edicionEquipoCliente.GetEdicionEquipos()
+	var edicionEquipos model.EdicionEquipos = edicionEquipoCliente.GetEdicionEquipos(IdEdicionTorneo)
 	var edicionEquiposDto dto.EdicionEquiposDto
 	if len(edicionEquipos) == 0 {
 		return edicionEquiposDto, e.NewBadRequestApiError("equipos de ediciones no encontradas")

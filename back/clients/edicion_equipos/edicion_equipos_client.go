@@ -20,9 +20,9 @@ func InsertEdicionEquipos(edicionEquipo model.EdicionEquipo) model.EdicionEquipo
 	return edicionEquipo
 }
 
-func GetEdicionEquipos() model.EdicionEquipos {
+func GetEdicionEquipos(IdEdicionTorneo int) model.EdicionEquipos {
 	var edicionEquipos model.EdicionEquipos
-	Db.Find(&edicionEquipos)
+	Db.Where("id_edicion_torneo = ?", IdEdicionTorneo).Find(&edicionEquipos)
 
 	log.Debug("Equipos Participantes de la edicion: ", edicionEquipos)
 
