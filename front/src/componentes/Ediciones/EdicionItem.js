@@ -10,7 +10,7 @@ export const EdicionItem = ({ id, anio, sede_final, id_torneo }) => {
     cookies.set("id_edicion_torneo", id, { path: "/" });
   };
   return (
-    <Link to="/participantes" className="Edicion" onClick={handleClick}>
+    <Link to="/ediciones/opciones" className="Edicion" onClick={handleClick}>
       <div className="Edicion_footer">
         <h1>{anio}</h1>
         <h2>{sede_final}</h2>

@@ -4,6 +4,7 @@ import { PaisesLista } from "./Equipos/index";
 import { InsertEdition } from "./Torneos/funcion";
 import { Home } from "./Home/index";
 import { InsertParticipante } from "./Participantes/funcion";
+import { MenuOpciones } from "./Ediciones/Opciones";
 import { TorneosLista } from "./Ediciones/index";
 
 export const Paginas = () => {
@@ -14,6 +15,7 @@ export const Paginas = () => {
           <Route path="/equipos" element={<PaisesLista />} />
           <Route path="/torneos" element={<InsertEdition />} />
           <Route path="/participantes" element={<InsertParticipante />} />
+          <Route path="/ediciones/opciones" element={<MenuOpciones />} />
           <Route path="/ediciones" element={<TorneosLista />} />
         </Routes>
     </section>

@@ -87,6 +87,15 @@ const Form = ({ onChange, onSubmit, form }) => {
           </button>
         </div>
       </form>
+      <button
+        type="button" 
+        onClick={() => {
+          window.location.href = "/ediciones/opciones";
+        }}
+        className="retroceder"
+      >
+        Retroceder
+      </button>
     </div>
   );
 };

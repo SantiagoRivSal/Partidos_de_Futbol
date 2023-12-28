@@ -53,3 +53,15 @@
     width: 150px; /* Ajusta el tamaño según sea necesario */
     height: auto; /* Mantiene la proporción original */
   }
+
+  .retroceder {
+    background-color: #e74c3c;
+    position: absolute; /* Posiciona de forma absoluta */
+    bottom: 10px; /* Alinea en el borde inferior */
+    right: 10px; /* Alinea a la derecha */
+  }
+  
+  .retroceso:hover {
+    background-color: #c0392b;
+  }
+  

@@ -1,0 +1,54 @@
+/* Opciones.css */
+
+.opciones-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  /* Alinea horizontalmente los botones */
+  .Opciones, .retroceder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .Opciones {
+    margin-bottom: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Quita el subrayado de los enlaces */
+  }
+  
+  .Opciones:hover {
+    background-color: #2073c8;
+  }
+
+  
+  .logo {
+    margin-right: 10px;
+  }
+  
+  .retroceder {
+    background-color: #e74c3c;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  .retroceder:hover {
+    background-color: #c0392b;
+  }
+  
+  
