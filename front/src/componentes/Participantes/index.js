@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 const Form = ({ onChange, onSubmit, form }) => {
   const [countryOptions, setCountryOptions] = useState([]);
   const [equipoOptions, setEquipoOptions] = useState([]);
-  
 
   useEffect(() => {
     // Llamada al backend para obtener los valores de los países
@@ -16,9 +15,13 @@ const Form = ({ onChange, onSubmit, form }) => {
   useEffect(() => {
     // Llamada al backend para obtener los valores de los equipos filtrados por país
     if (form.id_pais) {
-      fetch(`http://localhost:8090/equiposxpais/`+form.id_pais)
+      fetch(`http://localhost:8090/equiposxpais/` + form.id_pais)
         .then(response => response.json())
-        .then(data => setEquipoOptions(data))
+        .then(data => {
+          // Ordenar los equipos alfabéticamente por nombre
+          const sortedEquipos = data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+          setEquipoOptions(sortedEquipos);
+        })
         .catch(error => console.error('Error fetching equipo options:', error));
     }
   }, [form.id_pais]);
@@ -101,4 +104,5 @@ const Form = ({ onChange, onSubmit, form }) => {
 };
 
 export default Form;
+
 

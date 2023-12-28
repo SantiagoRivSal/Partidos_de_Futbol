@@ -1,6 +1,8 @@
 import React from "react";
 import "./Opciones.css";
 import Logo from "../../imagenes/Logo_Torneo.png"
+import Cuadro from "../../imagenes/Cuadro.png"
+
 
 export const MenuOpciones = () => {
   return (
@@ -9,7 +11,7 @@ export const MenuOpciones = () => {
       <a href="/participantes">
         <button type="button" className="Opciones">
         <div className="logo">
-                <img src={Logo} alt="logo" width="150"/>
+                <img src={Logo} alt="logo" width="200"/>
             </div>
           Insertar Equipos en la Edicion
         </button>
@@ -18,6 +20,9 @@ export const MenuOpciones = () => {
       {/* Botón 2 */}
       <a href="/pagina2">
         <button type="button" className="Opciones">
+        <div className="logo">
+                <img src={Cuadro} alt="cuadro" width="200"/>
+            </div>
           Crear Partidos
         </button>
       </a>

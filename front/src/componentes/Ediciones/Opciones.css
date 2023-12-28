@@ -13,7 +13,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Quita el subrayado de los enlaces */
   }
+  
   
   .Opciones {
     margin-bottom: 10px;
@@ -25,10 +30,6 @@
     background-color: #3498db;
     color: #ffffff;
     transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none; /* Quita el subrayado de los enlaces */
   }
   
   .Opciones:hover {
