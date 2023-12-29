@@ -18,7 +18,7 @@ export const MenuOpciones = () => {
       </a>
 
       {/* Botón 2 */}
-      <a href="/pagina2">
+      <a href="/partidos">
         <button type="button" className="Opciones">
         <div className="logo">
                 <img src={Cuadro} alt="cuadro" width="200"/>

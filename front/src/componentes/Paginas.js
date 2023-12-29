@@ -6,6 +6,8 @@ import { Home } from "./Home/index";
 import { InsertParticipante } from "./Participantes/funcion";
 import { MenuOpciones } from "./Ediciones/Opciones";
 import { TorneosLista } from "./Ediciones/index";
+import { Match } from "./Partidos/index";
+
 
 export const Paginas = () => {
   return (
@@ -17,6 +19,8 @@ export const Paginas = () => {
           <Route path="/participantes" element={<InsertParticipante />} />
           <Route path="/ediciones/opciones" element={<MenuOpciones />} />
           <Route path="/ediciones" element={<TorneosLista />} />
+          <Route path="/partidos" element={<Match />} />
+
         </Routes>
     </section>
 )

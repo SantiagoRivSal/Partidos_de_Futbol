@@ -42,7 +42,7 @@ func mapUrls() {
 	router.GET("/paisesxconfederacion/:id_confederacion", paisController.GetPaisesByIdConfederacion)
 
 	//PArtidos del Torneo Mapping
-	router.GET("/partidos", partidoController.GetPartidos)
+	router.GET("/partidos/:id_edicion_torneo/:id_fase", partidoController.GetPartidos)
 	router.POST("/partido", partidoController.PartidosInsert)
 
 	// Torneos Mapping

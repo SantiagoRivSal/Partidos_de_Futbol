@@ -4,9 +4,11 @@ import (
 	"back/dto"
 	service "back/services"
 	"net/http"
+	"strconv"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func PartidosInsert(c *gin.Context) {
@@ -29,11 +31,18 @@ func PartidosInsert(c *gin.Context) {
 }
 
 func GetPartidos(c *gin.Context) {
-	var partidosDto dto.PartidosDto
-	partidosDto, err := service.PartidoService.GetPartidos()
+	log.Debug("Torneo id to load: " + c.Param("id_edicion_torneo"))
+	IdEdicionTorneo, _ := strconv.Atoi(c.Param("id_edicion_torneo"))
 
-	if err != nil {
-		c.JSON(err.Status(), err)
+	// Agregar el nuevo parámetro
+	log.Debug("Edicion id to load: " + c.Param("id_fase"))
+	IdFase, _ := strconv.Atoi(c.Param("id_fase"))
+
+	var partidosDto dto.PartidosDto
+	partidosDto, er := service.PartidoService.GetPartidos(IdEdicionTorneo, IdFase)
+
+	if er != nil {
+		c.JSON(er.Status(), er)
 		return
 	}
 

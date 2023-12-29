@@ -10,7 +10,7 @@ import (
 type partidoService struct{}
 
 type partidoServiceInterface interface {
-	GetPartidos() (dto.PartidosDto, e.ApiError)
+	GetPartidos(IdEdicionTorneo, IdFase int) (dto.PartidosDto, e.ApiError)
 	InsertPartidos(partidoDto dto.PartidoDto) (dto.PartidoDto, e.ApiError)
 }
 
@@ -22,9 +22,9 @@ func init() {
 	PartidoService = &partidoService{}
 }
 
-func (s *partidoService) GetPartidos() (dto.PartidosDto, e.ApiError) {
+func (s *partidoService) GetPartidos(IdEdicionTorneo, IdFase int) (dto.PartidosDto, e.ApiError) {
 
-	var partidos model.Partidos = partidoCliente.GetPartidos()
+	var partidos model.Partidos = partidoCliente.GetPartidos(IdEdicionTorneo, IdFase)
 	var partidosDto dto.PartidosDto
 	if len(partidos) == 0 {
 		return partidosDto, e.NewBadRequestApiError("partidos no encontrados")
