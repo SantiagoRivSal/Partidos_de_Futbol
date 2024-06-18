@@ -29,19 +29,21 @@ func mapUrls() {
 	//Resultado de Torneo Mapping
 	router.GET("/resultados", resultadoController.GetResultados)
 	router.POST("/resultado", resultadoController.ResultadoInsert)
+	router.GET("/resultadoxedicion/:id_edicion_torneos", resultadoController.GetResultadoByIdEdicionTorneo)
 
 	// Equipos Mapping
 	router.GET("/equipos", equipoController.GetEquipos)
 	router.GET("/equiposxpais/:id_pais", equipoController.GetEquiposByIdPais)
+	router.GET("/equipo/:id", equipoController.GetEquipoById)
 
-	// Fases Mapping
+	// Fases Mapping --- SACAR
 	router.GET("/fases", faseController.GetFases)
 
 	// Paises Mapping
 	router.GET("/paises", paisController.GetPaises)
 	router.GET("/paisesxconfederacion/:id_confederacion", paisController.GetPaisesByIdConfederacion)
 
-	//PArtidos del Torneo Mapping
+	//PArtidos del Torneo Mapping --- SACAR
 	router.GET("/partidos/:id_edicion_torneo/:id_fase", partidoController.GetPartidos)
 	router.POST("/partido", partidoController.PartidosInsert)
 

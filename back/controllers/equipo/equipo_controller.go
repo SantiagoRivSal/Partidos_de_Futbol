@@ -37,3 +37,18 @@ func GetEquiposByIdPais(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, equiposDto)
 }
+
+func GetEquipoById(c *gin.Context) {
+	log.Debug("Equipo id to load: " + c.Param("id"))
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	var equipoDto dto.EquipoDto
+
+	equipoDto, err := service.EquipoService.GetEquipoById(id)
+
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+	c.JSON(http.StatusOK, equipoDto)
+}

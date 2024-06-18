@@ -10,6 +10,15 @@ import (
 
 var Db *gorm.DB
 
+func GetEquipoById(id int) model.Equipo {
+	var equipo model.Equipo
+
+	Db.Where("id = ?", id).Find(&equipo)
+	log.Debug("Equipo: ", equipo)
+
+	return equipo
+}
+
 func GetEquipos() model.Equipos {
 	var equipos model.Equipos
 	Db.Find(&equipos)

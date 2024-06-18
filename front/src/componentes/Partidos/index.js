@@ -1,47 +1,98 @@
-import React from "react";
-import "./partidos.css"
+import React, { useEffect, useState } from 'react';
+import Cookies from "universal-cookie";
+import { EquipoItem } from "../Equipos/EquipoItem";
+import swal from "sweetalert2";
+import "./partidos.css";
+
+async function GetEquiposByEdicion(id) {
+  return fetch('http://localhost:8090/equiposxedicion/' + id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(data => data.json());
+}
+
+async function GetEquipoById(id) {
+  return fetch('http://localhost:8090/equipo/' + id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(data => data.json());
+}
 
 export const Match = () => {
+  const cookies = new Cookies();
+  const id = cookies.get("id_edicion_torneo");
+  console.log("Valor de la cookie:", id);
+
+  const [equipos, setEquipos] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await GetEquiposByEdicion(id);
+      if (response.status === 400) {
+        swal.fire({
+          icon: 'error',
+          text: "No hay Equipos que participen en esta edicion",
+        });
+      } else {
+        // Obteniendo los detalles de cada equipo
+        const equiposWithDetails = await Promise.all(
+          response.map(async (equipo) => {
+            const equipoDetails = await GetEquipoById(equipo.id_equipo);
+            return {
+              ...equipo,
+              nombre: equipoDetails.nombre,
+              escudo: equipoDetails.escudo
+            };
+          })
+        );
+        setEquipos(equiposWithDetails);
+        console.log(equiposWithDetails);
+      }
+    }
+    fetchData();
+  }, [id]); // El efecto se ejecutará cuando `id` cambie
+
   return (
     <div className="match">
-      <div className="match-header">
-        <div className="match-status">NOMBRE DE FASE</div>
-      </div>
-      <div className="match-content">
-        {/* Columna para el equipo local */}
-        <div className="column">
-          <div className="team team--home">
-            <div className="team-logo">
-              <img src="https://assets.codepen.io/285131/chelsea.svg" alt="Chelsea Logo" />
-            </div>
-            <h2 className="team-name">Chelsea</h2>
+          <div className="match-header">
+            <h1>Datos del Torneo</h1>
           </div>
-        </div>
-        {/* Columna para los detalles del partido */}
-        <div className="column">
-          <div className="match-details">
-            <div className="match-score">
-              <span className="match-score-number match-score-number--leading">3</span>
-              <span className="match-score-divider">-</span>
-              <span className="match-score-number">1</span>
-            </div>
-            <button className="match-bet-place">Insertar Resultado del Partido</button>
+          <div>
+            <div className="Equipos">
+            <div className="match-header">
+            <h1>Participantes</h1>
           </div>
-        </div>
-        {/* Columna para el equipo visitante */}
-        <div className="column">
-          <div className="team team--away">
-            <div className="team-logo">
-              <img
-                src="https://resources.premierleague.com/premierleague/badges/t1.svg"
-                alt="Man Utd Logo"
-              />
+              {
+                equipos.map(equipo => (
+                  <EquipoItem
+                    key={equipo.id_equipo}
+                    id={equipo.id_equipo}
+                    nombre={equipo.nombre}
+                    escudo={equipo.escudo}
+                  />
+                ))
+              }
             </div>
-            <h2 className="team-name">Man Utd</h2>
           </div>
+          <div>
+            <button type="button" onClick={() => { window.location.href = "/ediciones/opciones";
+              }}
+              className="atras"
+            >
+              Atrás
+            </button>
         </div>
-      </div>
     </div>
   );
 };
+
+
+
+
 

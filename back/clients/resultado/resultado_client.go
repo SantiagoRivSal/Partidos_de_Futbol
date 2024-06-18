@@ -16,7 +16,7 @@ func InsertResultados(resultado model.Resultado) model.Resultado {
 	if result.Error != nil {
 		log.Error("")
 	}
-	log.Debug("Nueva Edicion del Torneo Registrada: ", resultado.Id)
+	log.Debug("Nueva Resultado del Torneo Registrada: ", resultado.Id)
 	return resultado
 }
 
@@ -24,7 +24,16 @@ func GetResultados() model.Resultados {
 	var resultados model.Resultados
 	Db.Find(&resultados)
 
-	log.Debug("Ediciones del Torneo: ", resultados)
+	log.Debug("Resultados de los Torneos: ", resultados)
 
 	return resultados
+}
+
+func GetResultadoByIdEdicionTorneo(IdEdicionTorneo int) model.Resultado {
+	var resultado model.Resultado
+
+	Db.Where("id_edicion_torneo = ?", IdEdicionTorneo).Find(&resultado)
+	log.Debug("Resultado: ", resultado)
+
+	return resultado
 }

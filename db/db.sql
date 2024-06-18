@@ -51,6 +51,9 @@ CREATE TABLE `edicion_equipos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_edicion_torneo` int NOT NULL,
   `id_equipo` int NOT NULL,
+  `nombre` int NOT NULL,
+  `escudo` int NOT NULL,
+
   PRIMARY KEY (`id`),
   KEY `fk_edTorneo_idx` (`id_edicion_torneo`),
   KEY `fk_equipo_idx` (`id_equipo`),

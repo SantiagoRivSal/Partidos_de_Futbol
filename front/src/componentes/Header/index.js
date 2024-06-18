@@ -17,11 +17,6 @@ export const Header = ()=>{
         <ul>
             <li>
                <Link to="/" className="botones_menu">
-               INICIO
-               </Link> 
-            </li>
-            <li>
-               <Link to="/equipos" className="botones_menu">
                EQUIPOS
                </Link> 
             </li>

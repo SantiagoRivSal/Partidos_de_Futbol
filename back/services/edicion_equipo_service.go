@@ -34,6 +34,8 @@ func (s *edicionEquipoService) GetEdicionEquipos(IdEdicionTorneo int) (dto.Edici
 		edicionEquipoDto.IdEdicionTorneo = edicionEquipo.IdEdicionTorneo
 		edicionEquipoDto.IdEquipo = edicionEquipo.IdEquipo
 		edicionEquipoDto.Id = edicionEquipo.Id
+		//edicionEquipoDto.Nombre = edicionEquipo.Nombre
+		//edicionEquipoDto.Escudo = edicionEquipo.Escudo
 
 		edicionEquiposDto = append(edicionEquiposDto, edicionEquipoDto)
 	}
@@ -48,12 +50,16 @@ func (s *edicionEquipoService) InsertEdicionEquipos(edicionEquipoDto dto.Edicion
 	edicionEquipo.IdEdicionTorneo = edicionEquipoDto.IdEdicionTorneo
 	edicionEquipo.IdEquipo = edicionEquipoDto.IdEquipo
 	edicionEquipo.Id = edicionEquipoDto.Id
+	//edicionEquipo.Escudo = edicionEquipoDto.Escudo
+	//edicionEquipo.Nombre = edicionEquipoDto.Nombre
 
 	edicionEquipo = edicionEquipoCliente.InsertEdicionEquipos(edicionEquipo)
 
 	edicionEquipoDto.IdEdicionTorneo = edicionEquipo.IdEdicionTorneo
 	edicionEquipoDto.IdEquipo = edicionEquipo.IdEquipo
 	edicionEquipoDto.Id = edicionEquipo.Id
+	//edicionEquipoDto.Escudo = edicionEquipo.Escudo
+	//edicionEquipoDto.Nombre = edicionEquipo.Nombre
 
 	return edicionEquipoDto, nil
 

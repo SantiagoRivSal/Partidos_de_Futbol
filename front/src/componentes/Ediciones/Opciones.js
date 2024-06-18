@@ -2,6 +2,7 @@ import React from "react";
 import "./Opciones.css";
 import Logo from "../../imagenes/Logo_Torneo.png"
 import Cuadro from "../../imagenes/Cuadro.png"
+import Podio from "../../imagenes/Podio.png"
 
 
 export const MenuOpciones = () => {
@@ -18,24 +19,35 @@ export const MenuOpciones = () => {
       </a>
 
       {/* Botón 2 */}
-      <a href="/partidos">
+      <a href="/Resultado">
+        <button type="button" className="Opciones">
+        <div className="logo">
+                <img src={Podio} alt="logo" width="200"/>
+            </div>
+          Insertar Resultado Final
+        </button>
+      </a>
+      
+      {/* Botón 3 */}
+      <a href="/participantes/edicion">
         <button type="button" className="Opciones">
         <div className="logo">
                 <img src={Cuadro} alt="cuadro" width="200"/>
             </div>
-          Crear Partidos
+          Ver Edicion
         </button>
       </a>
 
+      
       {/* Botón de retroceso */}
       <button
         type="button" 
         onClick={() => {
           window.location.href = "/ediciones";
         }}
-        className="retroceder"
+        className="atras"
       >
-        Retroceder
+        Atrás
       </button>
     </div>
   );

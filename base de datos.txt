@@ -1,6 +1,4 @@
 INSERT INTO `fifa`.`confederacions` (`id`, `nombre`, `logo`) VALUES ('1', 'Conmebol', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_de_la_Conmebol.svg/888px-Logo_de_la_Conmebol.svg.png');
-INSERT INTO `fifa`.`confederacions` (`id`, `nombre`, `logo`) VALUES ('2', 'EUFA', 'https://2.bp.blogspot.com/-inJxt3l1Ggc/Welu2Bmat6I/AAAAAAABP7w/fQ3jJUftH7IW68jzT0VzLNUe7ZhkxpmTACLcBGAs/s1600/UEFA.png');
-
 
 INSERT INTO `fifa`.`fases` (`id`, `nombre`, `cantidad_equipos`) VALUES ('1', 'Final', '2');
 INSERT INTO `fifa`.`fases` (`id`, `nombre`, `cantidad_equipos`) VALUES ('2', 'Semifinal', '4');
@@ -22,8 +20,6 @@ INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES
 
 INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('1', 'Copa Libertadores', 'https://logospng.org/download/copa-libertadores/logo-copa-libertadores-256.png', '1');
 INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('2', 'Copa Sudamericana', 'https://logospng.org/download/copa-sul-americana/logo-conmebol-sul-americana-256.png', '1');
-INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('3', 'Champions League', 'https://logospng.org/download/uefa-champions-league/logo-uefa-champions-league-256.png', '2');
-INSERT INTO `fifa`.`torneos` (`id`, `nombre`, `logo`, `id_confederacion`) VALUES ('4', 'Europa League', 'https://logospng.org/download/uefa-europa-league/logo-uefa-europa-league-256.png', '2');
 
 
 INSERT INTO `fifa`.`equipos` (`id`, `nombre`, `escudo`, `id_pais`) VALUES (null, 'Boca Juniors', 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOL0rL1mnaqAIv_9cWnQayBcfquddQxXR82Ho7GG9YdcQjYhK077s3wlCOM1Z1OExJShV-b-f3Yzuoq049fzMYoRvgwR06s99-ezsl4uki7P80_dKIxjtIO4kDkpJNbJTxG-K2jS8xkKzvkTgkVXfy2sosC1ZROpCqNkNCiGJBhKbV9_u86I0Bq4wsNgM/s128/Boca%20Juniors128x.png', '1');
@@ -84,7 +80,6 @@ INSERT INTO `fifa`.`equipos` (`id`, `nombre`, `escudo`, `id_pais`) VALUES (null,
 INSERT INTO `fifa`.`equipos` (`id`, `nombre`, `escudo`, `id_pais`) VALUES (null, 'Sport Recife', 'https://2.bp.blogspot.com/-mgb4Hve9STk/WWPKxDafLwI/AAAAAAABMdc/QLSEUZkFTCgCkOj2jNdp_rrzGDA3WgRYQCLcBGAs/s1600/Sport%2BClub%2Bdo%2BRecife128x.png', '2');
 INSERT INTO `fifa`.`equipos` (`id`, `nombre`, `escudo`, `id_pais`) VALUES (null, 'Chapecoense', 'https://1.bp.blogspot.com/-wxFZb_wenN8/YM6g91-mkaI/AAAAAAABjyU/JbzyxhudfP0SBDqmExjgfpr21AjloOZ2gCLcBGAsYHQ/s128/Associacao%2BChapecoense%2Bde%2BFutebol128x.png', '2');
 INSERT INTO `fifa`.`equipos` (`id`, `nombre`, `escudo`, `id_pais`) VALUES (null, 'Clube Vitoria', 'https://1.bp.blogspot.com/-TyhpYMCN1A4/YBtULVuEuEI/AAAAAAABieE/DBPyHTgjee4NKehSIMxHBMRQe7Yfp76zQCLcBGAsYHQ/s128/Esporte%2BClube%2BVitoria128x.png', '2');
-
 
 
 INSERT INTO `fifa`.`equipos` (`id`, `nombre`, `escudo`, `id_pais`) VALUES (null, 'Liverpool', 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjh7anvMvcjhEsePGgye96kF9aWbNUkgOFjqqdiei3eYtBqvueofsnjeyNw5Y46TZRmCH7JXO4QXodQ6fsZJHKmQOp-XaKPlaA6kB5Pqzk75E63_sLwhuXWlEj1WDWNf9yogwaYNhkUeW9MiqFWzBtQ-692ujTNkHDKCNNYr5FPVD8J3i1OCjjYFcwopE/s128/Liverpool%20Futbol%20Club128x.png', '3');

@@ -29,7 +29,7 @@ const Form = ({ onChange, onSubmit, form }) => {
   return (
     <div className="container" id="container">
       <h1 className='publicar'>
-        Equipos Participantes
+        Resultado del Torneo
       </h1>
       <form
         className='form-publicar'
@@ -50,12 +50,12 @@ const Form = ({ onChange, onSubmit, form }) => {
         {/* Selector para el país */}
         
         <div className="form-group">
-          <label>Selecciona un País:</label>
+          <label>Elige al Campeon:</label>
           <select className="form-control inputp" name="id_pais"
             onChange={onChange}
             value={form.id_pais}
           >
-            <option value="" >Selecciona un País</option>
+            <option value="" >Selecciona un Equipo</option>
             {countryOptions.map(pais => (
               <option key={pais.id} value={pais.id}>
                 {pais.nombre}
@@ -65,14 +65,14 @@ const Form = ({ onChange, onSubmit, form }) => {
         </div>
         {/* Selector para el equipo */}
         <div className="form-group">
-          <label>Selecciona un Equipo:</label>
+          <label>Elige al Subcampeon:</label>
           <select
             className="form-control inputp"
             name="id_equipo"
             onChange={onChange}
             value={form.id_equipo}
           >
-            <option value="" disabled>Selecciona un Equipo</option>
+            <option value="" >Selecciona un Equipo</option>
             {equipoOptions.map(equipo => (
               <option key={equipo.id} value={equipo.id}>
                 {equipo.nombre}
@@ -86,7 +86,7 @@ const Form = ({ onChange, onSubmit, form }) => {
             type="submit"
             className="btn-summit"
           >
-            Insertar Equipo
+            Insertar Resultado
           </button>
         </div>
       </form>

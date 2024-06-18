@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import NewParticipante from './nuevoParticipante';
+import NewResultado from './nuevoResultado';
 import Cookies from "universal-cookie";
 import swal from "sweetalert2";
 
-export const InsertParticipante = () => {
+export const InsertResultado = () => {
   const cookies = new Cookies();
   const idEdicionTorneo = cookies.get("id_edicion_torneo");
   console.log("Valor de la cookie:", idEdicionTorneo);
 
   const [form, setForm] = useState({
     'id_edicion_torneo': idEdicionTorneo,
-    'id_equipo': "",
+    'campeon': "",
+    'subcampeon': "",
   });
 
   const [equiposEnEdicion, setEquiposEnEdicion] = useState([]);
@@ -98,13 +99,9 @@ export const InsertParticipante = () => {
     }
   };
 
-  return <NewParticipante
+  return <NewResultado
     form={form}
     onChange={handleChange}
     onSubmit={handleSubmit}
   />;
 };
-
-
-
-

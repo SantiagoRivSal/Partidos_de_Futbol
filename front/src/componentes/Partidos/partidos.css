@@ -186,3 +186,25 @@ body {
   box-shadow: 0 4px 8px 0 rgba(48, 48, 48, 0.25);
 }
 
+.atras {
+  position: fixed; /* Cambia de relative a fixed */
+  bottom: 10px;    /* Mantiene 10px desde la parte inferior */
+  right: 10px;      /* Mantiene 10px desde la parte izquierda */
+  color: #000000;
+  border: 2px solid rgb(216, 2, 2);
+  border-radius: 50px;
+  padding: 9px 18px;
+  font-family: "Lucida Console", Monaco, monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 #d80202;
+  -webkit-transition: ease-out 0.4s;
+  -moz-transition: ease-out 0.4s;
+  transition: ease-out 0.4s;
+}
+
+.atras:hover {
+  box-shadow: inset 400px 50px 0 0 #d80202;
+  color: #ffffff;
+}
+
