@@ -1,5 +1,5 @@
 import React from "react";
-import './Equipo.css';
+import '../Equipos/Equipo.css';
 
 export const EquipoItem = ({ id, nombre, escudo }) => {
   return (

@@ -93,3 +93,18 @@
   background-color: #ecf0f1; /* Color de fondo principal
 }*/
 
+
+.Trofeo_img {
+  margin: 10px;
+}
+
+.image {
+  width: 80px;
+  height: 80px;
+}
+
+.medal-image {
+  width: 50px; /* Ajusta el tamaño de la medalla según lo necesites */
+  height: auto;
+}
+
