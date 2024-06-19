@@ -36,7 +36,7 @@ CREATE TABLE `confederacions` (
 
 LOCK TABLES `confederacions` WRITE;
 /*!40000 ALTER TABLE `confederacions` DISABLE KEYS */;
-INSERT INTO `confederacions` VALUES (1,'Conmebol','https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_de_la_Conmebol.svg/888px-Logo_de_la_Conmebol.svg.png'),(2,'EUFA','https://2.bp.blogspot.com/-inJxt3l1Ggc/Welu2Bmat6I/AAAAAAABP7w/fQ3jJUftH7IW68jzT0VzLNUe7ZhkxpmTACLcBGAs/s1600/UEFA.png');
+INSERT INTO `confederacions` VALUES (1,'Conmebol','https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_de_la_Conmebol.svg/888px-Logo_de_la_Conmebol.svg.png');
 /*!40000 ALTER TABLE `confederacions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,31 +132,6 @@ INSERT INTO `equipos` VALUES (1,'Boca Juniors','https://blogger.googleuserconten
 UNLOCK TABLES;
 
 --
--- Table structure for table `fases`
---
-
-DROP TABLE IF EXISTS `fases`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fases` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(350) NOT NULL,
-  `cantidad_equipos` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fases`
---
-
-LOCK TABLES `fases` WRITE;
-/*!40000 ALTER TABLE `fases` DISABLE KEYS */;
-INSERT INTO `fases` VALUES (1,'Final',2),(2,'Semifinal',4),(3,'Cuartos de Final',8),(4,'Octavos de Final',16);
-/*!40000 ALTER TABLE `fases` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pais`
 --
 
@@ -185,43 +160,6 @@ INSERT INTO `pais` VALUES (1,'Argentina','https://blogger.googleusercontent.com/
 UNLOCK TABLES;
 
 --
--- Table structure for table `partidos`
---
-
-DROP TABLE IF EXISTS `partidos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `partidos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_edicion_torneo` int NOT NULL,
-  `id_fase` int NOT NULL,
-  `id_equipo_local` int NOT NULL,
-  `id_equipo_visitante` int NOT NULL,
-  `goles_local` int DEFAULT NULL,
-  `goles_visitante` int DEFAULT NULL,
-  `ganador` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_fase_idx` (`id_fase`),
-  KEY `fk_equipo_idx` (`id_equipo_local`,`id_equipo_visitante`),
-  KEY `fk_Ediciontorneo_idx` (`id_edicion_torneo`),
-  KEY `fk_equipo2` (`id_equipo_visitante`),
-  CONSTRAINT `fk_Ediciontorneo` FOREIGN KEY (`id_edicion_torneo`) REFERENCES `edicion_torneos` (`id`),
-  CONSTRAINT `fk_equipo1` FOREIGN KEY (`id_equipo_local`) REFERENCES `equipos` (`id`),
-  CONSTRAINT `fk_equipo2` FOREIGN KEY (`id_equipo_visitante`) REFERENCES `equipos` (`id`),
-  CONSTRAINT `fk_fases` FOREIGN KEY (`id_fase`) REFERENCES `fases` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `partidos`
---
-
-LOCK TABLES `partidos` WRITE;
-/*!40000 ALTER TABLE `partidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `partidos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `torneos`
 --
 
@@ -245,7 +183,7 @@ CREATE TABLE `torneos` (
 
 LOCK TABLES `torneos` WRITE;
 /*!40000 ALTER TABLE `torneos` DISABLE KEYS */;
-INSERT INTO `torneos` VALUES (1,'Copa Libertadores','https://upload.wikimedia.org/wikipedia/pt/4/4b/Conmebol_Libertadores_Bridgestone_logo.png',1),(2,'Copa Sudamericana','https://upload.wikimedia.org/wikipedia/pt/e/e4/Conmebol_Sudamericana_logo.png',1),(3,'Champions League','https://upload.wikimedia.org/wikipedia/pt/9/9b/116px-UEFA_Champions_League_logo_2_svg.png',2),(4,'Europa League','https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/2015_UEFA_Europa_League_logo_%282%29.svg/731px-2015_UEFA_Europa_League_logo_%282%29.svg.png',2);
+INSERT INTO `torneos` VALUES (1,'Copa Libertadores','https://upload.wikimedia.org/wikipedia/pt/4/4b/Conmebol_Libertadores_Bridgestone_logo.png',1),(2,'Copa Sudamericana','https://upload.wikimedia.org/wikipedia/pt/e/e4/Conmebol_Sudamericana_logo.png',1);
 /*!40000 ALTER TABLE `torneos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
