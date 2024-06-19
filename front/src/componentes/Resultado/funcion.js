@@ -9,22 +9,30 @@ export const InsertResultado = () => {
   console.log("Valor de la cookie:", idEdicionTorneo);
 
   const [form, setForm] = useState({
-    'id_edicion_torneo': idEdicionTorneo,
-    'campeon': "",
-    'subcampeon': "",
+    id_edicion_torneo: idEdicionTorneo,
+    campeon: "",
+    subcampeon: "",
   });
 
   const [equiposEnEdicion, setEquiposEnEdicion] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [resultadoExistente, setResultadoExistente] = useState(false);
 
   useEffect(() => {
     const obtenerEquiposEnEdicion = async () => {
+      if (!idEdicionTorneo) {
+        console.error("No hay idEdicionTorneo en las cookies");
+        setCargando(false);
+        return;
+      }
+
       try {
-        const response = await fetch(`http://localhost:8090/equiposxedicion/` + idEdicionTorneo);
+        const response = await fetch(`http://localhost:8090/equiposxedicion/${idEdicionTorneo}`);
         const data = await response.json();
 
         if (Array.isArray(data)) {
           const equiposDetalles = await Promise.all(data.map(async (equipo) => {
-            const res = await fetch(`http://localhost:8090/equipo/` + equipo.id_equipo);
+            const res = await fetch(`http://localhost:8090/equipo/${equipo.id_equipo}`);
             const equipoData = await res.json();
             return { id: equipo.id_equipo, nombre: equipoData.nombre };
           }));
@@ -35,11 +43,33 @@ export const InsertResultado = () => {
         }
       } catch (error) {
         console.error("Error al obtener equipos en la edición:", error);
-        setEquiposEnEdicion([]);  
+        setEquiposEnEdicion([]);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    const verificarResultadoExistente = async () => {
+      if (!idEdicionTorneo) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8090/resultadoxedicion/${idEdicionTorneo}`);
+        const data = await response.json();
+
+        if (response.ok && data.length > 0) {
+          setResultadoExistente(true);
+        } else {
+          setResultadoExistente(false);
+        }
+      } catch (error) {
+        console.error("Error al verificar resultado existente:", error);
       }
     };
 
     obtenerEquiposEnEdicion();
+    verificarResultadoExistente();
   }, [idEdicionTorneo]);
 
   const handleChange = (event) => {
@@ -53,23 +83,10 @@ export const InsertResultado = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Verificar si ya existe un resultado para la edición del torneo
-    try {
-      const checkResponse = await fetch(`http://localhost:8090/resultados?edicion=${form.id_edicion_torneo}`);
-      const checkData = await checkResponse.json();
-
-      if (checkResponse.ok && checkData.length > 0) {
-        swal.fire({
-          icon: 'error',
-          text: "Este torneo ya tiene un resultado cargado.",
-        });
-        return;
-      }
-    } catch (error) {
-      console.error("Error al verificar resultado existente:", error);
+    if (resultadoExistente) {
       swal.fire({
         icon: 'error',
-        text: "Error al verificar resultado existente.",
+        text: "Este torneo ya tiene un resultado cargado.",
       });
       return;
     }
@@ -116,12 +133,16 @@ export const InsertResultado = () => {
     }
   };
 
-  return <NewResultado
-    form={form}
-    onChange={handleChange}
-    onSubmit={handleSubmit}
-    equipos={equiposEnEdicion}
-  />;
+  if (cargando) {
+    return <div>Cargando...</div>;
+  }
+
+  return (
+    <NewResultado
+      form={form}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+      equipos={equiposEnEdicion}
+    />
+  );
 };
-
-
