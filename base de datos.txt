@@ -1,10 +1,5 @@
 INSERT INTO `fifa`.`confederacions` (`id`, `nombre`, `logo`) VALUES ('1', 'Conmebol', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_de_la_Conmebol.svg/888px-Logo_de_la_Conmebol.svg.png');
 
-INSERT INTO `fifa`.`fases` (`id`, `nombre`, `cantidad_equipos`) VALUES ('1', 'Final', '2');
-INSERT INTO `fifa`.`fases` (`id`, `nombre`, `cantidad_equipos`) VALUES ('2', 'Semifinal', '4');
-INSERT INTO `fifa`.`fases` (`id`, `nombre`, `cantidad_equipos`) VALUES ('3', 'Cuartos de Final', '8');
-INSERT INTO `fifa`.`fases` (`id`, `nombre`, `cantidad_equipos`) VALUES ('4', 'Octavos de Final', '16');
-
 
 INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Argentina','https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/1200px-Flag_of_Argentina.svg.png', '1');
 INSERT INTO `fifa`.`pais` (`id`, `nombre`, `bandera`, `id_confederacion`) VALUES (null, 'Brasil', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/2560px-Flag_of_Brazil.svg.png', '1');

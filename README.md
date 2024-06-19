@@ -1,7 +1,7 @@
 # Proyecto-ing-sw3
 ## 1- Lo que debe contemplar el proyecto integrador
-- Utilizar una aplicación (desarrollo propio o de un proyecto en github) que tenga al menos un servicio de backend, otro de frontend e interacción con base(s) de datos.
-- La aplicación debe estar en un repositorio de Git público.
+- Utilizar una aplicación (desarrollo propio o de un proyecto en github) que tenga al menos un servicio de backend, otro de frontend e interacción con base(s) de datos. - LISTO
+- La aplicación debe estar en un repositorio de Git público. - LISTO
 - Tener la construcción de la salida automatizada, utilizando alguna de las herramientas vistas en clase (Jenkins, GitHub Actions o alguna similar)
 - Cada commit a master deberá construir la aplicación
 - Se deberán correr los test de unidad y eventualmente recolectar y mostrar los resultados.
