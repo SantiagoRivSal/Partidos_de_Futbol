@@ -11,7 +11,7 @@ type resultadoService struct{}
 
 type resultadoServiceInterface interface {
 	GetResultados() (dto.ResultadosDto, e.ApiError)
-	GetResultadoByIdEdicionTorneo(id int) (dto.ResultadoDto, e.ApiError)
+	GetResultadoByIdEdicionTorneo(IdEdicionTorneo int) (dto.ResultadoDto, e.ApiError)
 	InsertResultados(resultadoDto dto.ResultadoDto) (dto.ResultadoDto, e.ApiError)
 }
 
@@ -24,11 +24,10 @@ func init() {
 }
 
 func (s *resultadoService) GetResultadoByIdEdicionTorneo(IdEdicionTorneo int) (dto.ResultadoDto, e.ApiError) {
-
 	var resultado model.Resultado = resultadoCliente.GetResultadoByIdEdicionTorneo(IdEdicionTorneo)
 	var resultadoDto dto.ResultadoDto
 
-	if resultado.Id == 0 {
+	if resultado.IdEdicionTorneo == 0 {
 		return resultadoDto, e.NewBadRequestApiError("Resultado not found")
 	}
 	resultadoDto.Id = resultado.Id

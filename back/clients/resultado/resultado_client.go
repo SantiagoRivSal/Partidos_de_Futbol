@@ -31,8 +31,11 @@ func GetResultados() model.Resultados {
 
 func GetResultadoByIdEdicionTorneo(IdEdicionTorneo int) model.Resultado {
 	var resultado model.Resultado
+	result := Db.Where("id_edicion_torneo = ?", IdEdicionTorneo).Find(&resultado)
 
-	Db.Where("id_edicion_torneo = ?", IdEdicionTorneo).Find(&resultado)
+	if result.Error != nil {
+		log.Error("Error al obtener resultado por IdEdicionTorneo: ", result.Error)
+	}
 	log.Debug("Resultado: ", resultado)
 
 	return resultado

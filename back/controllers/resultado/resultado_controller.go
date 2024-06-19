@@ -42,15 +42,20 @@ func GetResultados(c *gin.Context) {
 }
 
 func GetResultadoByIdEdicionTorneo(c *gin.Context) {
-	log.Debug("Resultado id to load: " + c.Param("id_edicion_torneo"))
+	log.Debug("Resultado id to load: " + c.Param("id_edicion_torneos"))
 
-	id_edicion_torneo, _ := strconv.Atoi(c.Param("id_edicion_torneo"))
-	var resultadoDto dto.ResultadoDto
-
-	resultadoDto, err := service.ResultadoService.GetResultadoByIdEdicionTorneo(id_edicion_torneo)
-
+	IdEdicionTorneo, err := strconv.Atoi(c.Param("id_edicion_torneos"))
 	if err != nil {
-		c.JSON(err.Status(), err)
+		log.Error("Error al convertir id_edicion_torneos a entero: ", err)
+		c.JSON(http.StatusBadRequest, "Invalid id_edicion_torneos parameter")
+		return
+	}
+
+	resultadoDto, er := service.ResultadoService.GetResultadoByIdEdicionTorneo(IdEdicionTorneo)
+
+	if er != nil {
+		log.Error("Error al obtener resultado por IdEdicionTorneo: ", er)
+		c.JSON(er.Status(), er)
 		return
 	}
 	c.JSON(http.StatusOK, resultadoDto)

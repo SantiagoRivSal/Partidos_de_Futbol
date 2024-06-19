@@ -55,9 +55,7 @@ func StartDbEngine() {
 	db.AutoMigrate(&model.EdicionTorneo{})
 	db.AutoMigrate(&model.Resultado{})
 	db.AutoMigrate(&model.Equipo{})
-	db.AutoMigrate(&model.Fase{})
 	db.AutoMigrate(&model.Pais{})
-	db.AutoMigrate(&model.Partido{})
 	db.AutoMigrate(&model.Torneo{})
 	log.Info("Finishing Migration Database Tables")
 }

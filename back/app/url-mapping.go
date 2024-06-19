@@ -5,9 +5,7 @@ import (
 	edicionEquipoController "back/controllers/edicion_equipo"
 	edicionTorneoController "back/controllers/edicion_torneo"
 	equipoController "back/controllers/equipo"
-	faseController "back/controllers/fase"
 	paisController "back/controllers/pais"
-	partidoController "back/controllers/partido"
 	resultadoController "back/controllers/resultado"
 	torneoController "back/controllers/torneo"
 
@@ -36,16 +34,9 @@ func mapUrls() {
 	router.GET("/equiposxpais/:id_pais", equipoController.GetEquiposByIdPais)
 	router.GET("/equipo/:id", equipoController.GetEquipoById)
 
-	// Fases Mapping --- SACAR
-	router.GET("/fases", faseController.GetFases)
-
 	// Paises Mapping
 	router.GET("/paises", paisController.GetPaises)
 	router.GET("/paisesxconfederacion/:id_confederacion", paisController.GetPaisesByIdConfederacion)
-
-	//PArtidos del Torneo Mapping --- SACAR
-	router.GET("/partidos/:id_edicion_torneo/:id_fase", partidoController.GetPartidos)
-	router.POST("/partido", partidoController.PartidosInsert)
 
 	// Torneos Mapping
 	router.GET("/torneos", torneoController.GetTorneos)
