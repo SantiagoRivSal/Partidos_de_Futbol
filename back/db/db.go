@@ -5,9 +5,7 @@ import (
 	edicionEquipoClient "back/clients/edicion_equipos"
 	edicionTorneoDetailClient "back/clients/edicion_torneo"
 	equipoClient "back/clients/equipo"
-	faseClient "back/clients/fase"
 	paisClient "back/clients/pais"
-	partidoClient "back/clients/partido"
 	resultadoCliente "back/clients/resultado"
 	torneoClient "back/clients/torneo"
 	"back/model"
@@ -43,9 +41,7 @@ func init() {
 	edicionEquipoClient.Db = db
 	edicionTorneoDetailClient.Db = db
 	equipoClient.Db = db
-	faseClient.Db = db
 	paisClient.Db = db
-	partidoClient.Db = db
 	torneoClient.Db = db
 }
 
