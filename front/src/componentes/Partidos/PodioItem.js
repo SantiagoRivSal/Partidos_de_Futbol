@@ -6,7 +6,7 @@ import '../Equipos/Equipo.css';
 
 export const Podio = ({ campeon, subcampeon }) => {
   return (
-    <div className="Podio">
+    <div className="Equipos">
       <div className="Equipo">
         <div className="Trofeo_img">
           <img className="medal-image" src={Oro} alt="Medalla de Oro" />

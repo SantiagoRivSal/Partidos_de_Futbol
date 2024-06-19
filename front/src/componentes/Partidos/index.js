@@ -105,14 +105,12 @@ export const Match = () => {
             <div className="match-header">
               <h1>Podio</h1>
             </div>
-            <div className="Podio">
               {podio?.campeon && podio?.subcampeon && (
                 <Podio
                   campeon={podio.campeon}
                   subcampeon={podio.subcampeon}
                 />
               )}
-            </div>
         </div>
       </div>
       <div>
