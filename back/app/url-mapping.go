@@ -36,11 +36,9 @@ func mapUrls() {
 
 	// Paises Mapping
 	router.GET("/paises", paisController.GetPaises)
-	router.GET("/paisesxconfederacion/:id_confederacion", paisController.GetPaisesByIdConfederacion)
 
 	// Torneos Mapping
 	router.GET("/torneos", torneoController.GetTorneos)
-	router.GET("/torneosxconfederacion/:id_confederacion", torneoController.GetTorneosByIdConfederacion)
 
 	log.Info("Finishing mappings configurations")
 }

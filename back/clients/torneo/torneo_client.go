@@ -18,12 +18,3 @@ func GetTorneos() model.Torneos {
 
 	return torneos
 }
-
-func GetTorneosByIdConfederacion(IdConfederacion int) model.Torneos {
-	var torneos model.Torneos
-
-	Db.Where("id_confederacion = ?", IdConfederacion).Find(&torneos)
-	log.Debug("Torneos: ", torneos)
-
-	return torneos
-}
