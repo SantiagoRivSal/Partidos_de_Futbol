@@ -5,24 +5,24 @@ services:
     build: ./db
     environment:
       MYSQL_DATABASE: fifa
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./db:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root"]
       timeout: 20s
       retries: 10
-  front:
-    build: ./front
+  frontend:
+    build: ./frontend
     depends_on:
       database:
         condition: service_healthy
     ports:
       - "3000:3000"
-  back:
-    build: ./back
+  backend:
+    build: ./backend
     depends_on:
       database:
         condition: service_healthy

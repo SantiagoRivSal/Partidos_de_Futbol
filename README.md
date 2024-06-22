@@ -31,3 +31,28 @@ Este proyecto consiste en una aplicación para crear torneos de futbol de Conmeb
 - **Alumno:** Santiago A. Riveros Salomon
 - **Mail:** 2000049@ucc.edu.ar
 - **Materia:** Ingeniería de Software III
+
+## Docker 🐋
+### Construir imágenes
+Para esto es necesario ejecuta en el CMD la linea:
+- docker-compose build
+
+### Levantar contenedores
+Para esto es necesario ejecuta en el CMD la linea:
+- docker-compose up -d
+
+### Subir a Docker Hub sanrivsal
+
+Para subir a las imagenes creadas por docker a esta plataforma, se utilizan los siguientes comando:
+
+- **Para iniciar sesion:** docker login
+- **Etiquetar la imagen:** hay que tener en cuanta que nuestro codigo general 3 imagenes por lo cual los comandos son:
+    - docker tag partidos_de_futbol-backend sanrivsal/partidos_de_futbol-backend:latest
+    - docker tag partidos_de_futbol-database sanrivsal/partidos_de_futbol-database:latest
+    - docker tag partidos_de_futbol-frontend sanrivsal/partidos_de_futbol-frontend:latest
+- **Subir las Imágenes:** Para subir todas las imagenes que se etiquetaron se utilizan los siguiente comando:
+    - docker push sanrivsal/partidos_de_futbol-backend:latest
+    - docker push sanrivsal/partidos_de_futbol-database:latest
+    - docker push sanrivsal/partidos_de_futbol-frontend:latest
+
+
