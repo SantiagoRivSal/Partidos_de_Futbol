@@ -1,0 +1,148 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Build and run 
+      run: |
+         docker compose up -d
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.18'
+
+    - name: Install Dependencies
+      run: go mod download
+
+    - name: Run Unit Tests
+      working-directory: backend
+      run: go test ./...
+
+  docker-publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+  
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Tag and push Docker images
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-backend:latest ./backend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-frontend:latest ./frontend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-database:latest ./db
+          
+          docker push ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-frontend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-database:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  
+  publish_to_gcr:
+    needs: docker-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Log in to GCR
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' > /tmp/keyfile.json
+          gcloud auth activate-service-account --key-file=/tmp/keyfile.json
+          gcloud auth configure-docker gcr.io
+
+      - name: Tag and push Docker images to GCR
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-backend:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-frontend:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-database:latest
+          
+          docker tag ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-backend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-backend:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-frontend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-frontend:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-database:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-database:latest
+
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-backend:latest
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-frontend:latest
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-database:latest
+
+  deploy_to_cloud_run:
+    needs: publish_to_gcr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Set Google Cloud project and authenticate
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' > /tmp/keyfile.json
+          gcloud auth activate-service-account --key-file=/tmp/keyfile.json
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+          gcloud config set run/region us-central1
+ 
+      - name: Deploy service to Cloud Run
+        run: |
+          gcloud run deploy my-app-frontend \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-front:latest \
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=4G \
+            --cpu=2 \
+            --port=3000
+          gcloud run deploy my-app-database \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/partidos_de_futbol-database:latest \
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=4G \
+            --cpu=2 \
+            --port=3306
+
+
+  integration-test:
+    needs: deploy_to_cloud_run
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+  
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+  
+      - name: Install Dependencies and CodeceptJS
+        working-directory: frontend
+        run: |
+          npm install
+          npx playwright install
+          sudo apt-get install -y xvfb
+  
+      - name: Run Integration Tests with xvfb-run
+        working-directory: frontend
+        run: xvfb-run -a npx codeceptjs run --steps
