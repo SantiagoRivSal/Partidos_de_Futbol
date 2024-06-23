@@ -1,8 +1,6 @@
 package equipo
 
 import (
-	"backend/model"
-	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -10,99 +8,101 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+type MockDatabase struct {
+	db *gorm.DB
+}
+
+func (m *MockDatabase) Find(dest interface{}, conds ...interface{}) *gorm.DB {
+	return m.db.Find(dest, conds...)
+}
+
+func (m *MockDatabase) Create(value interface{}) *gorm.DB {
+	return m.db.Create(value)
+}
+
+func (m *MockDatabase) Where(query interface{}, args ...interface{}) *gorm.DB {
+	return m.db.Where(query, args...)
+}
+
 func TestGetEquipoById(t *testing.T) {
-	// Crear una conexión simulada a la base de datos
 	db, mock, err := sqlmock.New()
-	assert.NoError(t, err)
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
 	defer db.Close()
 
-	// Crear una instancia de GORM DB
-	gormDB, err := gorm.Open("postgres", db)
-	assert.NoError(t, err)
-	Db = gormDB
+	gormDB, err := gorm.Open("mysql", db)
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a gorm database connection", err)
+	}
 
-	// Configurar la expectativa de la consulta SQL
+	Db = &MockDatabase{gormDB}
+
 	rows := sqlmock.NewRows([]string{"id", "nombre", "escudo", "id_pais"}).
-		AddRow(1, "Equipo A", "escudo_a.png", 10)
+		AddRow(1, "Equipo1", "Escudo1", 100)
+	mock.ExpectQuery("^SELECT (.+) FROM `equipos` WHERE (.+)$").WillReturnRows(rows)
 
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "equipos" WHERE (id = $1)`)).
-		WithArgs(1).
-		WillReturnRows(rows)
+	equipo := GetEquipoById(1)
 
-	// Llamar a la función que se está probando
-	result := GetEquipoById(1)
-
-	// Verificar que las expectativas se cumplan
 	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// Verificar el resultado
-	expected := model.Equipo{Id: 1, Nombre: "Equipo A", Escudo: "escudo_a.png", IdPais: 10}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, 1, equipo.Id)
+	assert.Equal(t, "Equipo1", equipo.Nombre)
+	assert.Equal(t, "Escudo1", equipo.Escudo)
+	assert.Equal(t, 100, equipo.IdPais)
 }
 
 func TestGetEquipos(t *testing.T) {
-	// Crear una conexión simulada a la base de datos
 	db, mock, err := sqlmock.New()
-	assert.NoError(t, err)
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
 	defer db.Close()
 
-	// Crear una instancia de GORM DB
-	gormDB, err := gorm.Open("postgres", db)
-	assert.NoError(t, err)
-	Db = gormDB
-
-	// Configurar la expectativa de la consulta SQL
-	rows := sqlmock.NewRows([]string{"id", "nombre", "escudo", "id_pais"}).
-		AddRow(1, "Equipo A", "escudo_a.png", 10).
-		AddRow(2, "Equipo B", "escudo_b.png", 20)
-
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "equipos"`)).
-		WillReturnRows(rows)
-
-	// Llamar a la función que se está probando
-	result := GetEquipos()
-
-	// Verificar que las expectativas se cumplan
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// Verificar el resultado
-	expected := model.Equipos{
-		{Id: 1, Nombre: "Equipo A", Escudo: "escudo_a.png", IdPais: 10},
-		{Id: 2, Nombre: "Equipo B", Escudo: "escudo_b.png", IdPais: 20},
+	gormDB, err := gorm.Open("mysql", db)
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a gorm database connection", err)
 	}
-	assert.Equal(t, expected, result)
+
+	Db = &MockDatabase{gormDB}
+
+	rows := sqlmock.NewRows([]string{"id", "nombre", "escudo", "id_pais"}).
+		AddRow(1, "Equipo1", "Escudo1", 100).
+		AddRow(2, "Equipo2", "Escudo2", 101)
+	mock.ExpectQuery("^SELECT (.+) FROM `equipos`$").WillReturnRows(rows)
+
+	equipos := GetEquipos()
+
+	assert.NoError(t, mock.ExpectationsWereMet())
+	assert.Len(t, equipos, 2)
+	assert.Equal(t, 1, equipos[0].Id)
+	assert.Equal(t, "Equipo1", equipos[0].Nombre)
+	assert.Equal(t, 2, equipos[1].Id)
+	assert.Equal(t, "Equipo2", equipos[1].Nombre)
 }
 
 func TestGetEquiposByIdPais(t *testing.T) {
-	// Crear una conexión simulada a la base de datos
 	db, mock, err := sqlmock.New()
-	assert.NoError(t, err)
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
 	defer db.Close()
 
-	// Crear una instancia de GORM DB
-	gormDB, err := gorm.Open("postgres", db)
-	assert.NoError(t, err)
-	Db = gormDB
-
-	// Configurar la expectativa de la consulta SQL
-	rows := sqlmock.NewRows([]string{"id", "nombre", "escudo", "id_pais"}).
-		AddRow(1, "Equipo A", "escudo_a.png", 10).
-		AddRow(2, "Equipo C", "escudo_c.png", 10)
-
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "equipos" WHERE (id_pais = $1)`)).
-		WithArgs(10).
-		WillReturnRows(rows)
-
-	// Llamar a la función que se está probando
-	result := GetEquiposByIdPais(10)
-
-	// Verificar que las expectativas se cumplan
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// Verificar el resultado
-	expected := model.Equipos{
-		{Id: 1, Nombre: "Equipo A", Escudo: "escudo_a.png", IdPais: 10},
-		{Id: 2, Nombre: "Equipo C", Escudo: "escudo_c.png", IdPais: 10},
+	gormDB, err := gorm.Open("mysql", db)
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a gorm database connection", err)
 	}
-	assert.Equal(t, expected, result)
+
+	Db = &MockDatabase{gormDB}
+
+	rows := sqlmock.NewRows([]string{"id", "nombre", "escudo", "id_pais"}).
+		AddRow(1, "Equipo1", "Escudo1", 100).
+		AddRow(2, "Equipo2", "Escudo2", 100)
+	mock.ExpectQuery("^SELECT (.+) FROM `equipos` WHERE (.+)$").WillReturnRows(rows)
+
+	equipos := GetEquiposByIdPais(100)
+
+	assert.NoError(t, mock.ExpectationsWereMet())
+	assert.Len(t, equipos, 2)
+	assert.Equal(t, 100, equipos[0].IdPais)
+	assert.Equal(t, 100, equipos[1].IdPais)
 }

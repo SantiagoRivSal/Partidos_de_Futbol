@@ -8,7 +8,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	//"github.com/SantiagoRivSal/Partidos_de_Futbol/backend/model"
 )
 
 type MockDB struct {

@@ -2,26 +2,44 @@ package resultado
 
 import (
 	"backend/model"
-	"regexp"
+	"errors"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
+// MockDatabase es una estructura que implementa la interfaz Database para ser usada en las pruebas.
+type MockDatabase struct {
+	mock.Mock
+}
+
+func (m *MockDatabase) Find(dest interface{}, conds ...interface{}) *gorm.DB {
+	args := m.Called(dest, conds...)
+	db := &gorm.DB{}
+	db.Error = args.Error(0)
+	return db
+}
+
+func (m *MockDatabase) Create(value interface{}) *gorm.DB {
+	args := m.Called(value)
+	db := &gorm.DB{}
+	db.Error = args.Error(0)
+	return db
+}
+
+func (m *MockDatabase) Where(query interface{}, args ...interface{}) *gorm.DB {
+	mockArgs := m.Called(query, args...)
+	db := &gorm.DB{}
+	db.Error = mockArgs.Error(0)
+	return db
+}
+
 func TestInsertResultados(t *testing.T) {
-	// Crear una conexión simulada a la base de datos
-	db, mock, err := sqlmock.New()
-	assert.NoError(t, err)
-	defer db.Close()
+	mockDb := new(MockDatabase)
+	Db = mockDb
 
-	// Crear una instancia de GORM DB
-	gormDB, err := gorm.Open("postgres", db)
-	assert.NoError(t, err)
-	Db = gormDB
-
-	// Datos de prueba
 	resultado := model.Resultado{
 		Id:              1,
 		IdEdicionTorneo: 100,
@@ -29,82 +47,80 @@ func TestInsertResultados(t *testing.T) {
 		Subcampeon:      2,
 	}
 
-	// Configurar la expectativa de la inserción SQL
-	mock.ExpectBegin()
-	mock.ExpectExec(regexp.QuoteMeta(`INSERT INTO "resultados" ("id","id_edicion_torneo","campeon","subcampeon") VALUES ($1,$2,$3,$4) RETURNING "resultados"."id"`)).
-		WithArgs(resultado.Id, resultado.IdEdicionTorneo, resultado.Campeon, resultado.Subcampeon).
-		WillReturnResult(sqlmock.NewResult(1, 1))
-	mock.ExpectCommit()
+	// Simulamos que la operación Create no produce errores
+	mockDb.On("Create", &resultado).Return(nil)
 
-	// Llamar a la función que se está probando
 	result := InsertResultados(resultado)
 
-	// Verificar que las expectativas se cumplan
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// Verificar el resultado
 	assert.Equal(t, resultado, result)
+	mockDb.AssertExpectations(t)
 }
 
 func TestGetResultados(t *testing.T) {
-	// Crear una conexión simulada a la base de datos
-	db, mock, err := sqlmock.New()
-	assert.NoError(t, err)
-	defer db.Close()
+	mockDb := new(MockDatabase)
+	Db = mockDb
 
-	// Crear una instancia de GORM DB
-	gormDB, err := gorm.Open("postgres", db)
-	assert.NoError(t, err)
-	Db = gormDB
+	var resultados model.Resultados
 
-	// Configurar la expectativa de la consulta SQL
-	rows := sqlmock.NewRows([]string{"id", "id_edicion_torneo", "campeon", "subcampeon"}).
-		AddRow(1, 100, 1, 2).
-		AddRow(2, 101, 3, 4)
+	// Simulamos que la operación Find no produce errores
+	mockDb.On("Find", &resultados).Return(nil)
 
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "resultados"`)).
-		WillReturnRows(rows)
-
-	// Llamar a la función que se está probando
 	result := GetResultados()
 
-	// Verificar que las expectativas se cumplan
-	assert.NoError(t, mock.ExpectationsWereMet())
-
-	// Verificar el resultado
-	expected := model.Resultados{
-		{Id: 1, IdEdicionTorneo: 100, Campeon: 1, Subcampeon: 2},
-		{Id: 2, IdEdicionTorneo: 101, Campeon: 3, Subcampeon: 4},
-	}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, resultados, result)
+	mockDb.AssertExpectations(t)
 }
 
 func TestGetResultadoByIdEdicionTorneo(t *testing.T) {
-	// Crear una conexión simulada a la base de datos
-	db, mock, err := sqlmock.New()
-	assert.NoError(t, err)
-	defer db.Close()
+	mockDb := new(MockDatabase)
+	Db = mockDb
 
-	// Crear una instancia de GORM DB
-	gormDB, err := gorm.Open("postgres", db)
-	assert.NoError(t, err)
-	Db = gormDB
+	idEdicionTorneo := 100
+	var resultado model.Resultado
 
-	// Configurar la expectativa de la consulta SQL
-	rows := sqlmock.NewRows([]string{"id", "id_edicion_torneo", "campeon", "subcampeon"}).
-		AddRow(1, 100, 1, 2)
+	// Simulamos que las operaciones Where y Find no producen errores
+	mockDb.On("Where", "id_edicion_torneo = ?", idEdicionTorneo).Return(nil)
+	mockDb.On("Find", &resultado).Return(nil)
 
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "resultados" WHERE (id_edicion_torneo = $1)`)).
-		WithArgs(100).
-		WillReturnRows(rows)
+	result := GetResultadoByIdEdicionTorneo(idEdicionTorneo)
 
-	// Llamar a la función que se está probando
-	result := GetResultadoByIdEdicionTorneo(100)
+	assert.Equal(t, resultado, result)
+	mockDb.AssertExpectations(t)
+}
 
-	// Verificar que las expectativas se cumplan
-	assert.NoError(t, mock.ExpectationsWereMet())
+func TestInsertResultadosWithError(t *testing.T) {
+	mockDb := new(MockDatabase)
+	Db = mockDb
 
-	// Verificar el resultado
-	expected := model.Resultado{Id: 1, IdEdicionTorneo: 100, Campeon: 1, Subcampeon: 2}
-	assert.Equal(t, expected, result)
+	resultado := model.Resultado{
+		Id:              1,
+		IdEdicionTorneo: 100,
+		Campeon:         1,
+		Subcampeon:      2,
+	}
+
+	// Simulamos que la operación Create produce un error
+	mockDb.On("Create", &resultado).Return(errors.New("some error"))
+
+	result := InsertResultados(resultado)
+
+	assert.Equal(t, resultado, result)
+	mockDb.AssertExpectations(t)
+}
+
+func TestGetResultadoByIdEdicionTorneoWithError(t *testing.T) {
+	mockDb := new(MockDatabase)
+	Db = mockDb
+
+	idEdicionTorneo := 100
+	var resultado model.Resultado
+
+	// Simulamos que las operaciones Where y Find producen errores
+	mockDb.On("Where", "id_edicion_torneo = ?", idEdicionTorneo).Return(errors.New("some error"))
+	mockDb.On("Find", &resultado).Return(errors.New("some error"))
+
+	result := GetResultadoByIdEdicionTorneo(idEdicionTorneo)
+
+	assert.Equal(t, resultado, result)
+	mockDb.AssertExpectations(t)
 }

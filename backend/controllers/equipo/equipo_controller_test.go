@@ -1,6 +1,9 @@
 package equipoController
 
 import (
+	"backend/dto"
+	"backend/services"
+	"backend/utils/errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -9,86 +12,81 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Función para inicializar el router de Gin para los tests
-func setupRouter() *gin.Engine {
-	gin.SetMode(gin.TestMode)
-	router := gin.New()
-	router.GET("/equipos", GetEquipos)
-	router.GET("/equipos/:id_pais", GetEquiposByIdPais)
-	router.GET("/equipo/:id", GetEquipoById)
-	return router
+type mockEquipoService struct{}
+
+func (s *mockEquipoService) GetEquipos() (dto.EquiposDto, errors.ApiError) {
+	return dto.EquiposDto{
+		{Id: 1, Nombre: "Equipo1", Escudo: "Escudo1", IdPais: 100},
+		{Id: 2, Nombre: "Equipo2", Escudo: "Escudo2", IdPais: 101},
+	}, nil
 }
 
-// Test para GetEquipos
+func (s *mockEquipoService) GetEquipoById(id int) (dto.EquipoDto, errors.ApiError) {
+	if id == 1 {
+		return dto.EquipoDto{Id: 1, Nombre: "Equipo1", Escudo: "Escudo1", IdPais: 100}, nil
+	}
+	return dto.EquipoDto{}, errors.NewBadRequestApiError("equipo not found")
+}
+
+func (s *mockEquipoService) GetEquiposByIdPais(IdPais int) (dto.EquiposDto, errors.ApiError) {
+	if IdPais == 100 {
+		return dto.EquiposDto{
+			{Id: 1, Nombre: "Equipo1", Escudo: "Escudo1", IdPais: 100},
+		}, nil
+	}
+	return dto.EquiposDto{}, errors.NewBadRequestApiError("equipos no encontrados")
+}
+
 func TestGetEquipos(t *testing.T) {
-	router := setupRouter()
+	services.EquipoService = &mockEquipoService{}
 
-	// Create a mock HTTP request
-	req, err := http.NewRequest("GET", "/equipos", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	router := gin.Default()
+	router.GET("/equipos", GetEquipos)
 
-	// Create a response recorder
+	req, _ := http.NewRequest("GET", "/equipos", nil)
 	w := httptest.NewRecorder()
-
-	// Perform the request
 	router.ServeHTTP(w, req)
 
-	// Check the response status code
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	// Optionally, check the response body or headers here
-	// Example: Assert that the response body is not empty
-	assert.NotEmpty(t, w.Body.String())
+	expected := `[{"id":1,"nombre":"Equipo1","escudo":"Escudo1","id_pais":100},{"id":2,"nombre":"Equipo2","escudo":"Escudo2","id_pais":101}]`
+	assert.JSONEq(t, expected, w.Body.String())
 }
 
-// Test para GetEquiposByIdPais
 func TestGetEquiposByIdPais(t *testing.T) {
-	router := setupRouter()
+	services.EquipoService = &mockEquipoService{}
 
-	// Set up a mock HTTP request
-	idPais := "123" // Example ID
-	req, err := http.NewRequest("GET", "/equipos/"+idPais, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	router := gin.Default()
+	router.GET("/equipos/pais/:id_pais", GetEquiposByIdPais)
 
-	// Create a response recorder
+	req, _ := http.NewRequest("GET", "/equipos/pais/100", nil)
 	w := httptest.NewRecorder()
-
-	// Perform the request
 	router.ServeHTTP(w, req)
 
-	// Check the response status code
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	// Optionally, check the response body or headers here
-	// Example: Assert that the response body is not empty
-	assert.NotEmpty(t, w.Body.String())
+	expected := `[{"id":1,"nombre":"Equipo1","escudo":"Escudo1","id_pais":100}]`
+	assert.JSONEq(t, expected, w.Body.String())
 }
 
-// Test para GetEquipoById
 func TestGetEquipoById(t *testing.T) {
-	router := setupRouter()
+	services.EquipoService = &mockEquipoService{}
 
-	// Set up a mock HTTP request
-	idEquipo := "456" // Example ID
-	req, err := http.NewRequest("GET", "/equipo/"+idEquipo, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	router := gin.Default()
+	router.GET("/equipo/:id", GetEquipoById)
 
-	// Create a response recorder
+	req, _ := http.NewRequest("GET", "/equipo/1", nil)
 	w := httptest.NewRecorder()
-
-	// Perform the request
 	router.ServeHTTP(w, req)
 
-	// Check the response status code
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	// Optionally, check the response body or headers here
-	// Example: Assert that the response body is not empty
-	assert.NotEmpty(t, w.Body.String())
+	expected := `{"id":1,"nombre":"Equipo1","escudo":"Escudo1","id_pais":100}`
+	assert.JSONEq(t, expected, w.Body.String())
+
+	req, _ = http.NewRequest("GET", "/equipo/2", nil)
+	w = httptest.NewRecorder()
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
 }
