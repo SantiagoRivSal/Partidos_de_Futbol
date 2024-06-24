@@ -38,8 +38,8 @@ func TestGetTorneos(t *testing.T) {
 
 	// Configurar el mock para que devuelva directamente las Torneos al llamar a Find
 	expectedTorneos := []model.Torneo{
-		{Id: 1, Nombre: "Pais 1", Logo: "logo1.png", IdConfederacion: 1},
-		{Id: 2, Nombre: "Pais 2", Logo: "logo2.png", IdConfederacion: 1},
+		{Id: 1, Nombre: "Torneo 1", Logo: "logo1.png", IdConfederacion: 1},
+		{Id: 2, Nombre: "Torneo 2", Logo: "logo2.png", IdConfederacion: 1},
 	}
 	mockDB.On("Find", mock.AnythingOfType("*model.Torneos"), mock.Anything).Run(func(args mock.Arguments) {
 		dest := args.Get(0).(*model.Torneos)
