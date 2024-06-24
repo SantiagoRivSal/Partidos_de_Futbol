@@ -12,14 +12,13 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-
     - name: Build and run 
       run: |
-        docker compose up -d
+         docker compose up -d
 
-  unit-test:
-    runs-on: ubuntu-latest
+  test:
     needs: build
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
@@ -39,25 +38,27 @@ jobs:
       run: go test ./...
 
   docker-publish:
-    needs: unit-test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
+  
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-  
+      
       - name: Tag and push Docker images
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-backend:latest ./backend
           docker build -t ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-frontend:latest ./frontend
           docker build -t ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-database:latest ./db
-      
+          
           docker push ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-backend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-frontend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/partidos_de_futbol-database:latest
-
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 
           
