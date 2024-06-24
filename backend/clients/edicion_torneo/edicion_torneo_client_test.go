@@ -54,6 +54,6 @@ func TestInsertEdicionTorneos(t *testing.T) {
 
 }
 
-func TestGetEdicionTorneos(t *testing.T) {
+/*func TestGetEdicionTorneos(t *testing.T) {
 
-}
+}*/

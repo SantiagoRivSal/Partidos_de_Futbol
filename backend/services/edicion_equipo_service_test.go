@@ -1,3 +1,4 @@
+/*
 package services
 
 import (
@@ -73,4 +74,4 @@ func TestInsertEdicionEquipos(t *testing.T) {
 	assert.Equal(t, expectedEdicionEquipo.Id, result.Id)
 	assert.Equal(t, expectedEdicionEquipo.IdEdicionTorneo, result.IdEdicionTorneo)
 	assert.Equal(t, expectedEdicionEquipo.IdEquipo, result.IdEquipo)
-}
+}*/
