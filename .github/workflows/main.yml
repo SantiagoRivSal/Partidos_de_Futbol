@@ -59,20 +59,18 @@ jobs:
     needs: docker-publish
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME  }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Create GCP key file
-        run: echo '${{ secrets.GCP_SA_KEY }}' > /tmp/keyfile.json
-
-      - name: Authenticate with GCP
+      - name: Log in to GCR
         run: |
+          echo '${{ secrets.GCP_SA_KEY }}' > /tmp/keyfile.json
           gcloud auth activate-service-account --key-file=/tmp/keyfile.json
           gcloud auth configure-docker gcr.io
 
@@ -86,9 +84,6 @@ jobs:
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database
 
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest
