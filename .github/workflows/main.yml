@@ -6,58 +6,60 @@ on:
       - main
 
 jobs:
-  build:
+  Constructor:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-    - name: Build and run 
-      run: |
-         docker compose up -d
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Build Backend Docker Image for Testing
-      run: |
-        docker build -t backend-test ./backend
-    
-    - name: Run Unit Tests in Docker
-      run: |
-        docker run --rm backend-test go test ./...
-
-  docker-publish:
-    needs: test
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-  
+      - name: Build and run
+        run: |
+          docker compose up -d
+
+  Test:
+    needs: Constructor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Backend Docker Image for Testing
+        run: |
+          docker build -t backend-test ./backend
+
+      - name: Run Unit Tests in Docker
+        run: |
+          docker run --rm backend-test go test ./...
+
+  Publicacion_Docker:
+    needs: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      
+
       - name: Tag and push Docker images
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest ./backend
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest ./frontend
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest ./db
-          
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest ./frontend
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest ./backend
+
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-  publish_to_gcr:
-    needs: docker-publish
+  Publicacion_Google_Cloud:
+    needs: Publicacion_Docker
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -66,7 +68,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME  }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Log in to GCR
         run: |
@@ -79,18 +81,19 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest
-          
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend
+
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend
 
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest
 
-  deploy_to_cloud_run:
-    needs: publish_to_gcr
+  Implementacion_Nube:
+    needs: Publicacion_Google_Cloud
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -101,6 +104,16 @@ jobs:
           gcloud auth activate-service-account --key-file=/tmp/keyfile.json
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
           gcloud config set run/region us-central1
+
+      - name: Deploy database service to Cloud Run
+        run: |
+          gcloud run deploy partidos-de-futbol-database \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=4G \
+            --cpu=2 \
+            --port=3306
 
       - name: Deploy frontend service to Cloud Run
         run: |
@@ -120,17 +133,4 @@ jobs:
             --allow-unauthenticated \
             --memory=4G \
             --cpu=2 \
-            --port=8080
-
-      - name: Deploy database service to Cloud Run
-        run: |
-          gcloud run deploy partidos-de-futbol-database \
-            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
-            --platform=managed \
-            --allow-unauthenticated \
-            --memory=4G \
-            --cpu=2 \
-            --port=3306
-
-
-            
+            --port=8090
