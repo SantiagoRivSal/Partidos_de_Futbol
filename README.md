@@ -31,16 +31,16 @@ Este proyecto consiste en una aplicación para crear torneos de futbol de Conmeb
 Docker es una plataforma de software que facilita la creación, implementación y administración de aplicaciones utilizando contenedores. Los contenedores permiten empaquetar una aplicación junto con todas sus dependencias en una unidad estándar, asegurando que la aplicación funcionará de la misma manera en cualquier entorno.
 
 ### GitHub Actions 💾
-...
+GitHub Actions es un servicio de automatización proporcionado por GitHub que te permite crear flujos de trabajo personalizados para tu repositorio. Puedes usarlo para automatizar tareas como pruebas de código, implementaciones y otras acciones basadas en eventos de tu repositorio de GitHub.
 
 ### Google Cloud ☁️
-...
+Google Cloud es una plataforma de servicios en la nube proporcionada por Google. Ofrece una amplia gama de servicios, incluyendo computación en la nube, almacenamiento de datos, aprendizaje automático, análisis de datos y más. Es utilizada por empresas y desarrolladores para construir, desplegar y escalar aplicaciones en la nube.
 
 ### Unit Test
-...
+Las pruebas unitarias (Unit Tests) son pruebas automatizadas que verifican el comportamiento de unidades individuales de código, como funciones o métodos, de manera aislada. Se utilizan para garantizar que cada unidad de código funcione correctamente de acuerdo con sus especificaciones.
 
 ### Test de Integracion
-...
+Los tests de integración son pruebas que verifican que las distintas unidades de código, módulos o sistemas interactúen entre sí de manera correcta cuando se combinan. Estas pruebas evalúan el comportamiento integrado de componentes más grandes y su interacción con sistemas externos o dependencias.
 
 ## Información del Desarrollador 🧑‍💻
 
