@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  Constructor:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +16,8 @@ jobs:
       run: |
          docker compose up -d
 
-  test:
-    needs: build
+  Test:
+    needs: Constructor
     runs-on: ubuntu-latest
 
     steps:
@@ -32,8 +32,8 @@ jobs:
       run: |
         docker run --rm backend-test go test ./...
 
-  docker-publish:
-    needs: test
+  Publicacion_Docker:
+    needs: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -55,8 +55,8 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-  publish_to_gcr:
-    needs: docker-publish
+  Publicacion_Google_Cloud:
+    needs: Publicacion_Docker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -88,8 +88,8 @@ jobs:
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest
 
-  deploy_to_cloud_run:
-    needs: publish_to_gcr
+  Implementacion_Nube:
+    needs: Publicacion_Google_Cloud
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -120,7 +120,7 @@ jobs:
             --allow-unauthenticated \
             --memory=4G \
             --cpu=2 \
-            --port=8080
+            --port=8090
 
       - name: Deploy database service to Cloud Run
         run: |
