@@ -34,4 +34,4 @@ services:
       DB_HOST: database
       DB_NAME: fifa
     ports:
-      - "8090:8090"
+      - "4000:4000"

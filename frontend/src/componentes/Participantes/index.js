@@ -6,7 +6,7 @@ const Form = ({ onChange, onSubmit, form }) => {
 
   useEffect(() => {
     // Llamada al backend para obtener los valores de los países
-    fetch('http://localhost:8090/paises')
+    fetch('http://localhost:4000/paises')
       .then(response => response.json())
       .then(data => setCountryOptions(data))
       .catch(error => console.error('Error fetching country options:', error));
@@ -15,7 +15,7 @@ const Form = ({ onChange, onSubmit, form }) => {
   useEffect(() => {
     // Llamada al backend para obtener los valores de los equipos filtrados por país
     if (form.id_pais) {
-      fetch(`http://localhost:8090/equiposxpais/` + form.id_pais)
+      fetch(`http://localhost:4000/equiposxpais/` + form.id_pais)
         .then(response => response.json())
         .then(data => {
           // Ordenar los equipos alfabéticamente por nombre

@@ -19,7 +19,7 @@ export const InsertParticipante = () => {
     // Obtener los equipos ya registrados en la edición del torneo
     const obtenerEquiposEnEdicion = async () => {
       try {
-        const response = await fetch(`http://localhost:8090/equiposxedicion/` + idEdicionTorneo);
+        const response = await fetch(`http://localhost:4000/equiposxedicion/` + idEdicionTorneo);
         const data = await response.json();
         
         // Asegurarse de que data es un array antes de asignarlo a equiposEnEdicion
@@ -68,7 +68,7 @@ export const InsertParticipante = () => {
         };
 
         try {
-          const response = await fetch('http://localhost:8090/equipoxedicion', requestOptions);
+          const response = await fetch('http://localhost:4000/equipoxedicion', requestOptions);
 
           if (response.ok) {
             swal.fire({

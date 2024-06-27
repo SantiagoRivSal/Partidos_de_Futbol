@@ -28,6 +28,6 @@ func StartRoute() {
 	mapUrls()
 
 	log.Info("Starting server")
-	router.Run(":8090")
+	router.Run(":4000")
 
 }
