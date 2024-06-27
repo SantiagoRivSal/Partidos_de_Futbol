@@ -133,4 +133,11 @@ jobs:
             --allow-unauthenticated \
             --memory=4G \
             --cpu=2 \
-            --port=4000
+            --port=4000 \
+            --set-env-vars DB_HOST=${{ secrets.DB_HOST }} \
+                           DB_USER=${{ secrets.DB_USER }} \
+                           DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+                           DB_NAME=${{ secrets.DB_NAME }}
+    
+
+
