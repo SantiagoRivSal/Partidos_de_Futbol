@@ -28,7 +28,7 @@ Este proyecto consiste en una aplicación para crear torneos de futbol de Conmeb
 
 ## Tecnologias Utilizadas 💻
 ### Docker 🐋
-...
+Docker es una plataforma de software que facilita la creación, implementación y administración de aplicaciones utilizando contenedores. Los contenedores permiten empaquetar una aplicación junto con todas sus dependencias en una unidad estándar, asegurando que la aplicación funcionará de la misma manera en cualquier entorno.
 
 ### GitHub Actions 💾
 ...
