@@ -14,15 +14,15 @@ spec:
     spec:
       containers:
         - name: backend
-          image: gcr.io/${GCP_PROJECT_ID}/partidos_de_futbol-backend:latest
+          image: gcr.io/${GCP_PROJECT_ID}/google_backend:latest
           ports:
             - containerPort: 4000
         - name: frontend
-          image: gcr.io/${GCP_PROJECT_ID}/partidos_de_futbol-frontend:latest
+          image: gcr.io/${GCP_PROJECT_ID}/google_frontend:latest
           ports:
             - containerPort: 3000
         - name: database
-          image: gcr.io/${GCP_PROJECT_ID}/partidos_de_futbol-database:latest
+          image: gcr.io/${GCP_PROJECT_ID}/google_database:latest
           ports:
             - containerPort: 3306
 ---
