@@ -7,7 +7,7 @@ const Form = ({ onChange, onSubmit, form }) => {
     useEffect(() => {
       // Aquí realiza una llamada al backend para obtener los valores del torneo
       // Reemplaza la URL con la ruta correcta de tu backend
-      fetch('http://localhost:8080/torneos')
+      fetch('http://localhost:4000/torneos')
         .then(response => response.json())
         .then(data => setTorneoOptions(data))
         .catch(error => console.error('Error fetching torneo options:', error));

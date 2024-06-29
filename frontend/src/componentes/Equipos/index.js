@@ -5,7 +5,7 @@ import './Equipo.css';
 import swal from "sweetalert2";
 
 async function GetEquiposByIdPais(id) {
-    return fetch('http://localhost:8080/equiposxpais/' +id, {
+    return fetch('http://localhost:4000/equiposxpais/' +id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ async function GetEquiposByIdPais(id) {
 export const PaisesLista =()=>{   
     const [paises,setPaises] = useState([]);
     const fetchApi = async()=>{
-    const response = await fetch('http://localhost:8080/paises')
+    const response = await fetch('http://localhost:4000/paises')
     .then((response) => response.json());
     setPaises(response);
     };
