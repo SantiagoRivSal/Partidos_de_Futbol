@@ -114,7 +114,7 @@ jobs:
             --memory=4Gi \
             --cpu=2 \
             --port=3306
-            --set-env-vars=DATABASE_USER=${{ secrets.DB_USER }},DATABASE_PASSWORD=${{ secrets.DB_PASSWORD }},DATABASE_NAME=${{ secrets.DB_NAME }}
+            --set-env-vars=DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }}
 
       - name: Deploy frontend service to Cloud Run
         run: |
