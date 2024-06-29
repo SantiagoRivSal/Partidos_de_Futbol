@@ -83,6 +83,9 @@ jobs:
 
       - name: Tag and push Docker images to GCR
         run: |
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-backend:latest
 
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-database:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/partidos_de_futbol-frontend:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend
@@ -126,14 +129,26 @@ jobs:
             --memory=4Gi \
             --cpu=2 \
             --port=3000
-
-      - name: Deploy backend service to Cloud Run
+  integration-test:
+    needs: Implementacion_Nube
+    runs-on: ubuntu-latest
+      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+  
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+  
+      - name: Install Dependencies and CodeceptJS
+        working-directory: frontend
         run: |
-          gcloud run deploy partidos-de-futbol-backend \
-            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
-            --platform=managed \
-            --allow-unauthenticated \
-            --memory=8Gi \
-            --cpu=4 \
-            --port=4000
-            --set-env-vars=DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_PORT }},DB_NAME=${{ secrets.DB_NAME }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          npm install
+          npx playwright install
+          sudo apt-get install -y xvfb
+  
+      - name: Run Integration Tests with xvfb-run
+        working-directory: frontend
+        run: xvfb-run -a npx codeceptjs run --steps
