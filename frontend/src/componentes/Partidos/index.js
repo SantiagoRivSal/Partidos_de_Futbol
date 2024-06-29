@@ -7,7 +7,7 @@ import swal from "sweetalert2";
 import "./partidos.css";
 
 async function GetEquiposByEdicion(id) {
-  return fetch('http://localhost:4000/equiposxedicion/' + id, {
+  return fetch('http://localhost:8080/equiposxedicion/' + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ async function GetEquiposByEdicion(id) {
 }
 
 async function GetEquipoById(id) {
-  return fetch('http://localhost:4000/equipo/' + id, {
+  return fetch('http://localhost:8080/equipo/' + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ async function GetEquipoById(id) {
 }
 
 async function GetResultadoByEdicion(id) {
-  return fetch('http://localhost:4000/resultadoxedicion/' + id, {
+  return fetch('http://localhost:8080/resultadoxedicion/' + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
