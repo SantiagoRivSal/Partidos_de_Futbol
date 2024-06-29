@@ -134,5 +134,4 @@ jobs:
             --memory=8Gi \
             --cpu=4 \
             --port=4000
-            --add-cloudsql-instances=finalingsoft3bd \
             --set-env-vars=DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_PORT }},DB_NAME=${{ secrets.DB_NAME }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }}
