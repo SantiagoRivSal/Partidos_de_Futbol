@@ -33,5 +33,6 @@ services:
       DB_PASSWORD: root
       DB_HOST: database
       DB_NAME: fifa
+      DB_PORT: 3306
     ports:
       - "8080:8080"
