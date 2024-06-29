@@ -12,9 +12,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Build and run
+      - name: Build images
         run: |
-          docker compose up -d
+          docker-compose build
+      - name: start containers
+        run: |
+          docker-compose up -d
 
   Test:
     needs: Constructor
@@ -89,7 +92,7 @@ jobs:
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest
-
+          
   Implementacion_Nube:
     needs: Publicacion_Google_Cloud
     runs-on: ubuntu-latest
