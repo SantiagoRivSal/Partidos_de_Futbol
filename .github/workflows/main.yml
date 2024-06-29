@@ -131,6 +131,6 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4G \
-            --cpu=2 \
+            --memory=8G \
+            --cpu=4 \
             --port=4000
