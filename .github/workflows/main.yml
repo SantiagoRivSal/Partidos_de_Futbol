@@ -18,6 +18,7 @@ jobs:
       - name: start containers
         run: |
           docker-compose up -d
+  
 
   Test:
     needs: Constructor
@@ -26,6 +27,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
 
       - name: Build Backend Docker Image for Testing
         run: |
@@ -108,15 +114,9 @@ jobs:
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
           gcloud config set run/region us-central1
 
-      - name: Deploy database service to Cloud Run
+      - name: Import SQL file to Cloud SQL
         run: |
-          gcloud run deploy partidos-de-futbol-database \
-            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
-            --platform=managed \
-            --allow-unauthenticated \
-            --memory=4Gi \
-            --cpu=2 \
-            --port=3306
+          gcloud --quiet sql import sql ${{ secrets.INSTANCE_ID }} gs://bd_temp/fifa.sql
 
       - name: Deploy frontend service to Cloud Run
         run: |
@@ -136,6 +136,6 @@ jobs:
             --allow-unauthenticated \
             --memory=8Gi \
             --cpu=4 \
-            --port=4000
+            --port=4000 \
             --add-cloudsql-instances=${{ secrets.GCP_PROJECT_ID }}:${{ secrets.REGION }}:${{ secrets.INSTANCE_ID }} \
-            --set-env-vars=DB_HOST=${{ secrets.DB_HOST }}, DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }}
+            --set-env-vars=DB_HOST=${{ secrets.DB_HOST }},DB_PORT=3306,DB_NAME=${{ secrets.DB_NAME }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }}
