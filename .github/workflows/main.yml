@@ -111,7 +111,7 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4G \
+            --memory=4Gi \
             --cpu=2 \
             --port=3306
 
@@ -121,18 +121,18 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4G \
+            --memory=4Gi \
             --cpu=2 \
             --port=3000
 
-            - name: Deploy backend service to Cloud Run
-            run: |
-              gcloud run deploy partidos-de-futbol-backend \
-                --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
-                --platform=managed \
-                --allow-unauthenticated \
-                --memory=8Gi \
-                --cpu=4 \
-                --port=4000
-                --add-cloudsql-instances=${{ secrets.GCP_PROJECT_ID }}:${{ secrets.REGION }}:${{ secrets.INSTANCE_ID }} \
-                --set-env-vars=DB_HOST=${{ secrets.DB_HOST }}, DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }}
+      - name: Deploy backend service to Cloud Run
+        run: |
+          gcloud run deploy partidos-de-futbol-backend \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=8Gi \
+            --cpu=4 \
+            --port=4000
+            --add-cloudsql-instances=${{ secrets.GCP_PROJECT_ID }}:${{ secrets.REGION }}:${{ secrets.INSTANCE_ID }} \
+            --set-env-vars=DB_HOST=${{ secrets.DB_HOST }}, DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }}
