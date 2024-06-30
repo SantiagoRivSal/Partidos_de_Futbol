@@ -1,5 +1,5 @@
 # Dockerfile para MySQL
-FROM mysql
+FROM mysql:latest
 
 # Variables de entorno para configurar la base de datos
 ENV MYSQL_ROOT_PASSWORD=root
