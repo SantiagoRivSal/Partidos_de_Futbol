@@ -1,4 +1,4 @@
-name: CI/CD worflow
+name: alfo
 
 on:
   workflow_dispatch:
