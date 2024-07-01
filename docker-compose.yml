@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  fifa_db:
+  database:
     container_name: fifa_db
     build: ./db
     environment:
