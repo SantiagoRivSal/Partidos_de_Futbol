@@ -132,7 +132,7 @@ jobs:
     
       - name: Deploy backend to Google Cloud Run
         run: |
-              gcloud run deploy backend \
+              gcloud run deploy partidos-de-futbol-backend \
               --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
               --port=8080 \
               --platform managed \
