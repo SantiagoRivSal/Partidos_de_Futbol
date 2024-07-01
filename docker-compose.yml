@@ -2,6 +2,7 @@ version: '3'
 
 services:
   database:
+    container_name: fifa_db
     build: ./db
     environment:
       MYSQL_DATABASE: fifa
@@ -16,6 +17,7 @@ services:
       retries: 10
 
   frontend:
+    container_name: frontend
     build: ./frontend
     depends_on:
       database:
@@ -24,6 +26,7 @@ services:
       - "3000:3000"
 
   backend:
+    container_name: backend
     build: ./backend
     depends_on:
       database:
