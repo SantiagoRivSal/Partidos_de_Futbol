@@ -55,7 +55,7 @@ const Render =(
 )
     return(
         <>
-        <div className="paises">
+        <div className="paises"> 
             {
                 paises.map(pais =>(
                     <button className="paises" onClick={() => Handle(pais.id)}>

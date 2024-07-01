@@ -6,7 +6,7 @@ const Form = ({ onChange, onSubmit, form }) => {
 
   useEffect(() => {
     // Llamada al backend para obtener los valores de los países
-    fetch('http://localhost:4000/paises')
+    fetch('http://localhost:4000/paises') 
       .then(response => response.json())
       .then(data => setCountryOptions(data))
       .catch(error => console.error('Error fetching country options:', error));

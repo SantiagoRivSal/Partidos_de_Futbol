@@ -7,7 +7,7 @@ export const InsertResultado = () => {
   const cookies = new Cookies();
   const idEdicionTorneo = cookies.get("id_edicion_torneo");
   console.log("Valor de la cookie:", idEdicionTorneo);
-
+ 
   const [form, setForm] = useState({
     id_edicion_torneo: idEdicionTorneo,
     campeon: "",

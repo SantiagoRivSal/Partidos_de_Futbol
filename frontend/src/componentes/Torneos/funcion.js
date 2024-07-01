@@ -44,7 +44,7 @@ export const InsertEdition = () => {
           swal.fire({
             icon: 'success',
             text: "Torneo creado",
-        }).then((result) => {
+        }).then((result) => { 
           if (result.isConfirmed) {
             window.location.href = "http://localhost:3000/torneos"
           }});

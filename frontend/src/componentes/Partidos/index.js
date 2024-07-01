@@ -71,7 +71,7 @@ export const Match = () => {
       if (resultado && resultado.campeon && resultado.subcampeon) {
         const campeonDetails = await GetEquipoById(resultado.campeon);
         const subcampeonDetails = await GetEquipoById(resultado.subcampeon);
-        setPodio({
+        setPodio({ 
           campeon: campeonDetails,
           subcampeon: subcampeonDetails
         });

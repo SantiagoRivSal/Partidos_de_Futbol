@@ -19,7 +19,7 @@ export const TorneosLista = () => {
   const [torneos, setTorneos] = useState([]);
   const fetchTorneos = async () => {
     const response = await fetch("http://localhost:4000/torneos").then((response) =>
-      response.json()
+      response.json() 
     );
     setTorneos(response);
   };
