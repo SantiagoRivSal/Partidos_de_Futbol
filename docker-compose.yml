@@ -4,7 +4,6 @@ services:
   fifa_db:
     container_name: fifa_db
     build: ./db
-    image: fifa_db
     environment:
       MYSQL_DATABASE: fifa
       MYSQL_ROOT_PASSWORD: root
@@ -20,9 +19,8 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
-    image: frontend
     depends_on:
-      fifa_db:
+      database:
         condition: service_healthy
     ports:
       - "3000:3000"
@@ -30,9 +28,8 @@ services:
   backend:
     container_name: backend
     build: ./backend
-    image: backend
     depends_on:
-      fifa_db:
+      database:
         condition: service_healthy
     environment:
       DB_USER: root
