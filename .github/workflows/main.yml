@@ -112,7 +112,7 @@ jobs:
 
       - name: Deploy database service to Cloud Run
         run: |
-          gcloud run deploy partidos-de-futbol-database \
+          gcloud run deploy fifa \
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
             --platform=managed \
             --allow-unauthenticated \
@@ -122,7 +122,7 @@ jobs:
           
       - name: Deploy frontend service to Cloud Run
         run: |
-          gcloud run deploy partidos-de-futbol-frontend \
+          gcloud run deploy frontend \
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest \
             --platform=managed \
             --allow-unauthenticated \
@@ -132,8 +132,8 @@ jobs:
     
       - name: Deploy backend to Google Cloud Run
         run: |
-              gcloud run deploy partidos-de-futbol-backend \
-              --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
+              gcloud run deploy backend \
+              --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
               --port=8080 \
               --platform managed \
               --region=us-central1 \
