@@ -38,4 +38,4 @@ services:
       DB_NAME: fifa
       DB_PORT: 3306
     ports:
-      - "8080:8080"
+      - "4000:4000"

@@ -8,17 +8,20 @@ setCommonPlugins();
 
 /** @type {CodeceptJS.MainConfig} */
 exports.config = {
-  tests: './*_test.js',
+  tests: './*test.js',
   output: './output',
   helpers: {
     Playwright: {
       browser: 'chromium',
-      url: 'https://partidos-de-futbol-frontend-4ufveexwpa-uc.a.run.app',
-      show: true
+      url: 'http://localhost:3000', // Asegúrate de que la URL es correcta para tu entorno
+      show: true,
+      chromium: {
+        executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe' // Cambia esta ruta según tu sistema operativo
+      }
     }
   },
   include: {
     I: './steps_file.js'
   },
-  name: 'frontend'
+  name: 'Integration_test'
 }
