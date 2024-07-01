@@ -120,20 +120,20 @@ jobs:
             --cpu=2 \
             --port=3306
           
-      - name: Deploy frontend to Google Cloud Run
+      - name: Deploy frontend service to Cloud Run
         run: |
-            gcloud run deploy frontend
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest 
-            --port=3000 
-            --platform managed 
-            --region=us-central1 
-            --allow-unauthenticated 
-            --max-instances=15
+          gcloud run deploy partidos-de-futbol-frontend \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest \
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=4Gi \
+            --cpu=2 \
+            --port=3000
     
       - name: Deploy backend to Google Cloud Run
         run: |
               gcloud run deploy backend \
-              --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:latest \
+              --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_backend:latest \
               --port=8080 \
               --platform managed \
               --region=us-central1 \
