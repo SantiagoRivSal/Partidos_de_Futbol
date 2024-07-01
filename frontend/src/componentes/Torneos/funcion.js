@@ -38,7 +38,7 @@ export const InsertEdition = () => {
         }),
       };
       try {
-        const response = await fetch('http://localhost:8080/edicion_de_torneo', requestOptions);
+        const response = await fetch('http://localhost:4000/edicion_de_torneo', requestOptions);
         if (response.ok) {
           const data = await response.json();
           swal.fire({
