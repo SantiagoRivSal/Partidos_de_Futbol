@@ -27,12 +27,12 @@ export const InsertResultado = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:4000/equiposxedicion/${idEdicionTorneo}`);
+        const response = await fetch(`http://localhost:8080/equiposxedicion/${idEdicionTorneo}`);
         const data = await response.json();
 
         if (Array.isArray(data)) {
           const equiposDetalles = await Promise.all(data.map(async (equipo) => {
-            const res = await fetch(`http://localhost:4000/equipo/${equipo.id_equipo}`);
+            const res = await fetch(`http://localhost:8080/equipo/${equipo.id_equipo}`);
             const equipoData = await res.json();
             return { id: equipo.id_equipo, nombre: equipoData.nombre };
           }));
@@ -55,7 +55,7 @@ export const InsertResultado = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:4000/resultadoxedicion/${idEdicionTorneo}`);
+        const response = await fetch(`http://localhost:8080/resultadoxedicion/${idEdicionTorneo}`);
         const data = await response.json();
 
         if (response.ok && data.length > 0) {
@@ -103,7 +103,7 @@ export const InsertResultado = () => {
       };
 
       try {
-        const response = await fetch('http://localhost:4000/resultado', requestOptions);
+        const response = await fetch('http://localhost:8080/resultado', requestOptions);
 
         if (response.ok) {
           swal.fire({
