@@ -38,9 +38,9 @@ jobs:
         
     - name: Tag images
       run: |
-        docker tag backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
-        docker tag frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
-        docker tag fifa_db:latest ${{ secrets.DOCKERHUB_USERNAME }}/fifa_db:latest
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/fifa_db:latest ${{ secrets.DOCKERHUB_USERNAME }}/fifa_db:latest
       
     - name: Push images
       run: |
