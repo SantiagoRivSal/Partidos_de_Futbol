@@ -6,7 +6,7 @@ import swal from "sweetalert2";
 export const InsertParticipante = () => {
   const cookies = new Cookies();
   const idEdicionTorneo = cookies.get("id_edicion_torneo");
-  console.log("Valor de la cookie:", idEdicionTorneo);
+  console.log("Valor de la cookie:", idEdicionTorneo); 
 
   const [form, setForm] = useState({
     'id_edicion_torneo': idEdicionTorneo,

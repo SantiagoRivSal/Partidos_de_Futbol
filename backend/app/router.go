@@ -15,11 +15,11 @@ var (
 func init() {
 	router = gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
+		AllowOrigins:     []string{"http://localhost:3000"}, // Lista explícita de orígenes permitidos
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
-		AllowHeaders:     []string{"Origin", "Content-Type"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "Access-Control-Allow-Origin"}, // Añadir más encabezados si es necesario
 		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
+		AllowCredentials: true, // Solo funciona con orígenes específicos, no con '*'
 		MaxAge:           12 * time.Hour,
 	}))
 }
@@ -29,5 +29,4 @@ func StartRoute() {
 
 	log.Info("Starting server")
 	router.Run(":4000")
-
 }
