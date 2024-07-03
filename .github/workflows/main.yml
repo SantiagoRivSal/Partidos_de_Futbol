@@ -116,7 +116,7 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4Gi \
+            --memory=4G \
             --cpu=2 \
             --port=3306
           
@@ -126,7 +126,7 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4Gi \
+            --memory=4G \
             --cpu=2 \
             --port=3000
     
