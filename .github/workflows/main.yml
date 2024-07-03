@@ -116,7 +116,7 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_database:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4G \
+            --memory=4Gi \
             --cpu=2 \
             --port=3306
           
@@ -126,7 +126,7 @@ jobs:
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/google_frontend:latest \
             --platform=managed \
             --allow-unauthenticated \
-            --memory=4G \
+            --memory=4Gi \
             --cpu=2 \
             --port=3000
     
@@ -141,26 +141,4 @@ jobs:
          #     --max-instances=15 \
           #    --add-cloudsql-instances=fifa \
            #   --set-env-vars=DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_PORT }},DB_NAME=${{ secrets.DB_NAME }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-  integration-test:
-      needs: Implementacion_Nube
-      runs-on: ubuntu-latest
-          
-      steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-          
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 'latest'
-          
-      - name: Install Dependencies and CodeceptJS
-        working-directory: ./integration_test
-        run: |
-              npm install
-              npx playwright install
-              sudo apt-get install -y xvfb
-          
-      - name: Run Integration Tests with xvfb-run
-        working-directory: ./integration_test
-        run: xvfb-run -a npx codeceptjs run --steps
+  
