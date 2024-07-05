@@ -9,7 +9,7 @@ Scenario('Creacion de Torneos', ({ I }) => {
     I.selectOption('select[name="id_torneo"]', 'Copa Sudamericana'); // Ajusta el texto según el valor correcto
 
     // Rellena los otros campos
-    I.fillField('input[name="anio"]', '2021');
+    I.fillField('input[name="anio"]', '2025');
     I.fillField('input[name="sede_final"]', 'Cordoba');
     
     // Clic en Crear Torneo
