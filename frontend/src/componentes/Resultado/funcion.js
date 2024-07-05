@@ -27,12 +27,12 @@ export const InsertResultado = () => {
       }
 
       try {
-        const response = await fetch(`http://backend-4ufveexwpa-uc.a.run.app:4000/equiposxedicion/${idEdicionTorneo}`);
+        const response = await fetch(`https://backend-4ufveexwpa-uc.a.run.app/equiposxedicion/${idEdicionTorneo}`);
         const data = await response.json();
 
         if (Array.isArray(data)) {
           const equiposDetalles = await Promise.all(data.map(async (equipo) => {
-            const res = await fetch(`http://backend-4ufveexwpa-uc.a.run.app:4000/equipo/${equipo.id_equipo}`);
+            const res = await fetch(`https://backend-4ufveexwpa-uc.a.run.app/equipo/${equipo.id_equipo}`);
             const equipoData = await res.json();
             return { id: equipo.id_equipo, nombre: equipoData.nombre };
           }));
@@ -55,7 +55,7 @@ export const InsertResultado = () => {
       }
 
       try {
-        const response = await fetch(`http://backend-4ufveexwpa-uc.a.run.app:4000/resultadoxedicion/${idEdicionTorneo}`);
+        const response = await fetch(`https://backend-4ufveexwpa-uc.a.run.app/resultadoxedicion/${idEdicionTorneo}`);
         const data = await response.json();
 
         if (response.ok && data.length > 0) {
@@ -103,7 +103,7 @@ export const InsertResultado = () => {
       };
 
       try {
-        const response = await fetch('http://backend-4ufveexwpa-uc.a.run.app:4000/resultado', requestOptions);
+        const response = await fetch('https://backend-4ufveexwpa-uc.a.run.app/resultado', requestOptions);
 
         if (response.ok) {
           swal.fire({
@@ -111,7 +111,7 @@ export const InsertResultado = () => {
             text: "Resultado Insertado",
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "http://backend-4ufveexwpa-uc.a.run.app:3000/resultado"
+              window.location.href = "https://backend-4ufveexwpa-uc.a.run.app:3000/resultado"
             }
           });
         } else {
