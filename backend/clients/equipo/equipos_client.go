@@ -37,7 +37,7 @@ func GetEquipos() model.Equipos {
 func GetEquiposByIdPais(IdPais int) model.Equipos {
 	var equipos model.Equipos
 
-	Db.Where("id_pais = ?", IdPais).Find(&equipos)
+	Db.Where("id_pais = ?", 1).Find(&equipos)
 	log.Debug("Equipos: ", equipos)
 
 	return equipos
