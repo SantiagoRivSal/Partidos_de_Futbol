@@ -90,7 +90,7 @@ func TestGetEquiposByIdPais(t *testing.T) {
 
 	// Definición del comportamiento del Mock
 	mockEquipos := dto.EquiposDto{
-		{Id: 1, Nombre: "Equipo 1", Escudo: "escudo1.png", IdPais: 1},
+		{Id: 2, Nombre: "Equipo 1", Escudo: "escudo1.png", IdPais: 1},
 	}
 	mockService.On("GetEquiposByIdPais", 1).Return(mockEquipos, nil)
 
