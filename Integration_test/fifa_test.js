@@ -1,7 +1,7 @@
 Feature('fifa');
 
 Scenario('Creacion de Torneos', ({ I }) => {
-    I.amOnPage('http://localhost:3000/torneos');
+    I.amOnPage('http://https://backend-4ufveexwpa-uc.a.run.app/:3000/torneos');
     I.see('Creacion de Ediciones de Torneos');
 
     // Abre el desplegable y selecciona la opción deseada

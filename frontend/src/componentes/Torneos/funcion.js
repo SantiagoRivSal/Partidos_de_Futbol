@@ -38,7 +38,7 @@ export const InsertEdition = () => {
         }),
       };
       try {
-        const response = await fetch('http://localhost:4000/edicion_de_torneo', requestOptions);
+        const response = await fetch('http://https://backend-4ufveexwpa-uc.a.run.app/:4000/edicion_de_torneo', requestOptions);
         if (response.ok) {
           const data = await response.json();
           swal.fire({
@@ -46,7 +46,7 @@ export const InsertEdition = () => {
             text: "Torneo creado",
         }).then((result) => { 
           if (result.isConfirmed) {
-            window.location.href = "http://localhost:3000/torneos"
+            window.location.href = "http://https://backend-4ufveexwpa-uc.a.run.app/:3000/torneos"
           }});
           // Aquí podrías hacer algo con la respuesta, si es necesario
         } else {

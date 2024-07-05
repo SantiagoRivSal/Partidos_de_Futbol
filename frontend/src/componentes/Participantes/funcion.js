@@ -19,7 +19,7 @@ export const InsertParticipante = () => {
     // Obtener los equipos ya registrados en la edición del torneo
     const obtenerEquiposEnEdicion = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/equiposxedicion/` + idEdicionTorneo);
+        const response = await fetch(`http://https://backend-4ufveexwpa-uc.a.run.app/:4000/equiposxedicion/` + idEdicionTorneo);
         const data = await response.json();
         
         // Asegurarse de que data es un array antes de asignarlo a equiposEnEdicion
@@ -68,7 +68,7 @@ export const InsertParticipante = () => {
         };
 
         try {
-          const response = await fetch('http://localhost:4000/equipoxedicion', requestOptions);
+          const response = await fetch('http://https://backend-4ufveexwpa-uc.a.run.app/:4000/equipoxedicion', requestOptions);
 
           if (response.ok) {
             swal.fire({
@@ -76,7 +76,7 @@ export const InsertParticipante = () => {
               text: "Equipo Insertado",
             }).then((result) => {
               if (result.isConfirmed) {
-                window.location.href = "http://localhost:3000/participantes"
+                window.location.href = "http://https://backend-4ufveexwpa-uc.a.run.app/:3000/participantes"
               }
             });
           } else {

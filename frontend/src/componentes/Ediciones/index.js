@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import swal from "sweetalert2";
 
 async function GetEdicionesByTorneo(id) {
-  return fetch(`http://localhost:4000/ediciones_de_torneo/`+ id, {
+  return fetch(`http://https://backend-4ufveexwpa-uc.a.run.app/:4000/ediciones_de_torneo/`+ id, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ async function GetEdicionesByTorneo(id) {
 export const TorneosLista = () => {
   const [torneos, setTorneos] = useState([]);
   const fetchTorneos = async () => {
-    const response = await fetch("http://localhost:4000/torneos").then((response) =>
+    const response = await fetch("http://https://backend-4ufveexwpa-uc.a.run.app/:4000/torneos").then((response) =>
       response.json() 
     );
     setTorneos(response);
