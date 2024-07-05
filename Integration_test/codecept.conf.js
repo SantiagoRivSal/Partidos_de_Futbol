@@ -13,7 +13,7 @@ exports.config = {
   helpers: {
     Playwright: {
       browser: 'chromium',
-      url: 'http://https://backend-4ufveexwpa-uc.a.run.app/:3000', // Asegúrate de que la URL es correcta para tu entorno
+      url: 'http://backend-4ufveexwpa-uc.a.run.app:3000', // Asegúrate de que la URL es correcta para tu entorno
       show: true,
       windowSize: '1366x768',
       chromium: {
@@ -43,7 +43,7 @@ exports.config = {
   helpers: {
     Playwright: {
       browser: 'chromium',
-      url: 'http://https://backend-4ufveexwpa-uc.a.run.app/:3000',
+      url: 'http://backend-4ufveexwpa-uc.a.run.app:3000',
       show: true
     }
   },
